@@ -1,0 +1,132 @@
+---
+title: "estudiHepatitis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Descripció del dataset
+
+El joc seleccionat s'ha obtingut al repositori de machine learning UCI, el seu títol és "Hepatitis Data Set". Aquest dataset és molt interessant per aquesta pràctica, ja que permetrà aplicar algorismes de machine learining tant supervisats com no supervisats. El dataset compta amb la classe a la qual pertany cada observació segons si ha mort o ha sobreviscut, aquesta etiqueta permetrà aplicar algorismes supervisats. El dataset compta amb variables tant qualitatives com quantitatives. Això serà interessant, ja que podrem aplicar tècniques de discretització a les variables quantitatives. És interessant tenir variables dels dos tipus per tant de provar diferents algorismes tant els que necessitin variables qualitatives com els q necessitin variables quantitatives.
+També hi ha motius d'interès personal per haver seleccionat aquest dataset, ja que em sembla especialment interessant com la ciència de dades pot ajudar al camp mèdic fent estudis per tal de diagnosticar o predir diverses malalties i així poder ajudar a molts humans. Aquest dataset es pot utilitzar amb diversos propòsits, per exemple crear algorismes tant de deep learining com de machine learining per ajudar a fer el seguiment dels pacients amb hepatitis, es pot predir si el pacient viurà o morirà, això pot ajudar a comprovar si el tractament que s'està seguint està funcionant o no. També es poden buscar les relacions que tenen els atributs, quines influeixen més pel diagnòstic.
+
+Aquests són els atributs presents al dataset, els valors de les variables qualitatives estan representats numèricament però en aquesta descripció indicarem el significat d'aquests.\
+
+* **Class**: Classe a la qual pertany el pacient, viu o mor (Die/Life).
+* **AGE**: Indica l'edat del pacient.
+* **SEX**: Indica el sexe del pacient(Male/Female).
+* **STEROID**: Indica si el pacient ha pres esteroides (yes/no).
+* **ANTIVIRALS**: Indica si el pacient ha pres antivirals (yes/no).
+* **FATIGUE**: Indica si el pacient és sent fatigat o no (yes/no).
+* **MALAISE**: Indica si el pacient sent malestar (yes/no).
+* **ANOREXIA**: Indica si el pacient pateix anorèxia (yes/no).
+* **LIVER BIG**: Indica si la mida del fetge ha augmentat (yes/no).
+* **LIVER FIRM**: Indica si el fetge és manté ferm (yes/no).
+* **SPLEEN PAL**: Indica si el pacient presenta esplenomegàlia, una ampliació de la melsa (yes/no).
+* **SPIDERS**: Indica si el pacient presenta aranyes(vasos sanguinis engrandits) visibles.
+* **ASCITES**: Pesencia de líquid a la cavitat peritoneal (yes/no).
+* **VARICES**: Indica si el pacient presenta varius (yes/no).
+* **BILIRUBIN**: Indica el nivell de bilirubina del pacient.
+* **ALK PHOSPH**: Indica el valor de la fosfatasa alcalina del pacient.
+* **SGOT**: Valor obtingut amb l'anàlisi de sang del pacient després de la prova AST.
+* **ALBUMIN**: Indica el valor de la proteïna albúmina del pacient.
+* **PROTIME**: Indica el valor de la característica del pacient.  
+* **HISTOLOGY**: Indica el valor de'estudiar la histología (estudis microscopics)(yes/no).
+
+# Neteja de les dades
+
+Llegim el fitxer.
+```{r}
+dhep <- read.csv("data/hepatitis.csv")
+dattrs <- c("Class","AGE","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME","HISTOLOGY")
+
+names(dhep) <- dattrs
+
+```
+
+
+Com podem veure el dataset compta amb 154 files amb 20 variables (columnes).
+```{r}
+dim(dhep)
+```
+
+Primer mirem quin tipus s'ha assignat a cada columna. Es pot veure com hi ha variables que s'han llegit amb el tipus erroni, haurem de corregir el tipus assignat.
+```{r}
+str(dhep)
+```
+
+Canviem el tipus de les variables numèriques que havien estat llegides com a factor.
+```{r}
+quantattrs <- c("AGE","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME")
+for (i in quantattrs){
+  dhep[,i] <- as.numeric(dhep[,i])
+}
+
+```
+
+Canviem el tipus de les variables factor que han estat llegides incorrectament.
+```{r}
+factattrs <- c("Class","AGE","SEX")
+for (i in factattrs){
+  dhep[,i] <- as.numeric(dhep[,i])
+}
+```
+
+## Valors desconeguts
+
+En la primera insepecció hem pogut veure com hi ha valors desconeguts representats amb el signe interrogant. Mirarem quines columnes tenen valors desconeguts.
+```{r}
+colSums(dhep == "?")
+```
+
+Canviarem el valor de l'interrogant per NA. Guardem en un vector tots els atributs que contenen valors desconeguts i seguidament apliquem el canvi.
+```{r, results='hide'}
+missingattrs <- names(which(colSums(dhep == "?") > 0))
+
+for (m in missingattrs){
+  dhep[which(dhep[,m] == '?'),m] <- NA
+}
+```
+
+
+El primer que farem serà imputar els valors perduts que tenim al dataset, com que aquest dataset no és excessivament gran preferim aproximar els valors en comptes d'eliminar les observacions que compten amb mising values és a dir, assumirem un petit grau d'error a canvi de mantenir més observacions. A l'hora d'aplicar algorismes supervisats és interessant tenir grans datasets ja que es poden dividir en el dataset de train i el de test.
+En el primer apartat d'anàlisi exploratori hem comprovat com hi ha diversos atributs que tenen valors perduts. Per tal d'imputar els valors perduts utilitzarem el mètode missForest ja que últimament està guanyant popularitat i s'utilitza amb variables mixtes. Encara que el kNN és un dels més populars aquest, és molt sensible a la k que es tria.
+
+Eliminem la columna que no volem utilitzar.
+```{r}
+dhep$PROTIME <- NULL
+```
+
+
+Imputem els valors de les variables. Carreguem la llibreria i apliquem la funció.
+```{r}
+library("missForest")
+mf.res <- missForest(dhep, variablewise = TRUE)
+```
+
+Podem veure com tots els valors NA han desaparegut, han estat imputats. També podem obtenir informació sobre l'error, es pot veure com les columnes que no tenien cap valor per imputar tenen un error de 0, les columnes on s'han imputat valors presenten els seus corresponents errors, això pot afectar a l'estudi ja que els valors no són reals simplement són suposicions.
+```{r}
+dhep <- mf.res$ximp
+colSums(is.na(dhep))
+mf.res$OOBerror
+```
+
+## Valors extrems - outliers
+
+Mostrem una priemra descripció estadística.
+```{r}
+summary(dhep)
+```
+
+Analitzem els valors extrems, comprovem quins atributs de tipus quantitatiu presenten possibles valors extrems.
+Com veiem els atributs AGE i BILIRUBIN tenen alguns valors extrems, en el proper apartat valorarem si realment són tan extrems i prendrem decissions sobre com tractar-ho.
+```{r}
+for (col in names(dhep)){
+  cat("col:",col,"Outliers:",length(boxplot.stats(dhep[,col])$out),"\n")
+}
+```
+
+
+
