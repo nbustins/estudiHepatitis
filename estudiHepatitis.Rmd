@@ -1,6 +1,8 @@
 ---
 title: "estudiHepatitis"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -46,7 +48,6 @@ names(dhep) <- dattrs
 
 ```
 
-
 Com podem veure el dataset compta amb 154 files amb 20 variables (columnes).
 ```{r}
 dim(dhep)
@@ -74,11 +75,22 @@ for (i in factattrs){
 }
 ```
 
+Definim dos vectors amb les variables categòriques i numèriques.
+```{r}
+quantattrs <- c("AGE","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME")
+catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","HISTOLOGY")
+```
+
 ## Valors desconeguts
 
 En la primera insepecció hem pogut veure com hi ha valors desconeguts representats amb el signe interrogant. Mirarem quines columnes tenen valors desconeguts.
 ```{r}
 colSums(dhep == "?")
+```
+
+Mirem si hi ha algun valor NA. Podem veure que no.
+```{r}
+colSums(is.na(dhep))
 ```
 
 Canviarem el valor de l'interrogant per NA. Guardem en un vector tots els atributs que contenen valors desconeguts i seguidament apliquem el canvi.
@@ -90,13 +102,12 @@ for (m in missingattrs){
 }
 ```
 
-
 El primer que farem serà imputar els valors perduts que tenim al dataset, com que aquest dataset no és excessivament gran preferim aproximar els valors en comptes d'eliminar les observacions que compten amb mising values és a dir, assumirem un petit grau d'error a canvi de mantenir més observacions. A l'hora d'aplicar algorismes supervisats és interessant tenir grans datasets ja que es poden dividir en el dataset de train i el de test.
 En el primer apartat d'anàlisi exploratori hem comprovat com hi ha diversos atributs que tenen valors perduts. Per tal d'imputar els valors perduts utilitzarem el mètode missForest ja que últimament està guanyant popularitat i s'utilitza amb variables mixtes. Encara que el kNN és un dels més populars aquest, és molt sensible a la k que es tria.
 
 Eliminem la columna que no volem utilitzar.
 ```{r}
-dhep$PROTIME <- NULL
+#dhep$PROTIME <- NULL
 ```
 
 
@@ -123,10 +134,162 @@ summary(dhep)
 Analitzem els valors extrems, comprovem quins atributs de tipus quantitatiu presenten possibles valors extrems.
 Com veiem els atributs AGE i BILIRUBIN tenen alguns valors extrems, en el proper apartat valorarem si realment són tan extrems i prendrem decissions sobre com tractar-ho.
 ```{r}
-for (col in names(dhep)){
+for (col in quantattrs){
   cat("col:",col,"Outliers:",length(boxplot.stats(dhep[,col])$out),"\n")
 }
 ```
+Procedim a analitzar cadascun dels valors que es podria considerar outlier.
+
+En aquest primer cas la variable AGE representa l'edat, un valor de 78 anys no es pot considerar un outiler, mantindrem aquest valor.
+```{r}
+boxplot(dhep$AGE)
+boxplot.stats(dhep$AGE)$out
+```
+
+En aquest segon cas el nivell de bilirubina és més complex. Cal fer recerca sobre quins nivells màxims i mínims són possibles en pacient d'hepatitis. Segons les fonts consultades els valors més elevats de bilirubina indiquen problemes més greus, en propers apartats buscarem la relació de la bilirubina amb la vida o mort del pacient utilitzant testos d'estadística inferencial. Els nivells normals de bilirubina varien en un rang d'1 fins a 1.2 (mg/dL), a partir dels 2(mg/dL) la pell agafa un color groguenc. Sembla que aquests són valors molt elevats però dintre un rang possible, ja que s'indica que a partir dels 30 mg/dL el pacient es troba en estat molt crític.\
+```{r}
+boxplot(dhep$BILIRUBIN)
+boxplot.stats(dhep$BILIRUBIN)$out
+summary(dhep$BILIRUBIN)
+```
+
+Com hem vist els valors dels nivells de les variables categòriques no són explicatius, actualment es troben representats amb valors numèrics, canviarem aquests valors, ja que pot ser útil quan apliquem futurs algorismes i vulguem extreure conclusions.
+```{r}
+dhep[dhep$Class == 1,"Class"] <- 'Die'
+dhep[dhep$Class == 2,"Class"] <- 'Live'
+
+dhep[dhep$SEX == 1,"SEX"] <- 'Male'
+dhep[dhep$SEX == 2,"SEX"] <- 'Female'
+
+dhep$SEX <- as.factor(dhep$SEX)
+dhep$Class <- as.factor(dhep$Class)
+```
+
+```{r}
+# Transformem a caràcter. canviem el valors dels nivells i tornem a transformar a factor, així eliminem els nivells '?' missing.
+for (i in catattrs[- which (catattrs %in% list("Class","SEX"))] ){
+  dhep[,i] <- as.character(dhep[,i])
+  
+  dhep[ dhep[,i] == 1,i] <- 'Yes'
+  dhep[ dhep[,i] == 2,i] <- 'No'
+  
+  dhep[,i] <- as.factor(dhep[,i])
+}
+```
+
+
+
+# Anàlisi de les dades
+
+# Seleccio dels grups a analitzar
+
+En aquest apartat prepararem grups que poden ser d'interés per tal d'analitzar o comparar. En futurs apartats els utilitzarem per tal d'extreure conclusions.
+
+Pacients que han mort d'hepatitis.
+```{r}
+dhep.die <- dhep[dhep$Class == "Die",]
+```
+
+Pacients que han soberviscut a l'hepatitis.
+```{r}
+dhep.live <- dhep[dhep$Class == "Live",]
+```
+
+## Proves estadístiques
+
+### Comprovació de normalitat
+
+Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per tal de veure en quins casos podem assumir normalitat i en quins no. utilitzarem aquest test ja que es considera el més robust per tal de fer la prova de normalitat. Les hipòtesis que planteja el test són les seg¨üents:
+
+* **H_0**: La mostra & prové d'una població amb distribució normal.
+* **H_1**: La mostra no prové d'una població amb distribució normal.
+
+Si rebutjem la hipòtesis nul·la no podrem dir que les mostres vinguin d'una població amb distribució normal, d'altra forma si acceptem la hipòtsis nul·la és a dir el p-valor és superior a 0.05 podrem assumir normalitat.
+
+Carreguem una llibreria útil per fer taules.
+```{r}
+library("kableExtra")
+```
+
+Com podem veure l'única variable que segueix una distribució normal és l'edat "AGE". Prendrem una conclusió conservadora i no assumirem la normalitat de les demés variables (no aplicarem el teorema del límit central).
+```{r}
+mat <- NULL
+alpha <- 0.05
+for (atr in quantattrs){
+  pv <- shapiro.test(dhep[,atr])$p.value
+  mat <- rbind(mat, 
+               c(atr,pv,
+                 ifelse(pv > alpha,"Yes","No"))
+  )
+}
+
+colnames(mat) <- c("Variable","P-Value", "Dist. Normal")
+kable(mat) %>% kable_styling()
+```
+
+### Comprovació de la l’homoscedasticitat
+En aquest apartat comprovarem si Utilitzarem el test de Levene per la variable AGE i la seva alternativa no paramètrica el test de Fligner-Killeen per a les demés variables ja que no hem assumit normalitat.
+
+```{r}
+mat <- NULL
+alpha <- 0.05
+for (atr in quantattrs){
+  pv <- shapiro.test(dhep[,atr])$p.value
+  mat <- rbind(mat, 
+               c(atr,pv,
+                 ifelse(pv > alpha,"Yes","No"))
+  )
+}
+
+colnames(mat) <- c("Variable","P-Value", "Dist. Normal")
+kable(mat) %>% kable_styling()
+```
+
+### Influencia de les variables quantitatives en si el pacient soberviurà o morirà
+
+### Edat
+En aquest cas utilitzarem un test paramètric, hem pogut assumir normalitat després d'aplicar el test de shapiro wilk. Utilitzarem doncs el test de t-student.\
+Com podem veure el p-valor obtingut és inferior a 0.05, rebutgem la hipòtesi nul·la i acceptem l'alternativa. La mitjana d'edat dels pacients que moren és superior a l'edat mitjana dels que viuen.
+```{r}
+t.test(dhep.die$AGE,dhep.live$AGE,alternative = 'greater')
+```
+
+### Bilirubina
+Investigarem si la mitjana de bilirubina dels pacients de la classe DIE és superior als pacients de la classe LIVE. Com a hipòtesi nul·la tindrem que les dues classes tenen nivells de bilirubina iguals, com a alternativa direm que la mitjana de bilirubina dels pacients que moren és superior als que viuen.
+Utilitzarem un test no paramètric, el wilcox test. Com hem comprovat el test de shapiro wilk no ens ha assegurat que puguem assumir normalitat. Segons el p-value obtingut rebutgem la hipòtesi nul·la i acceptem l'alternativa, ja que és menor a 0.05.
+Podem dir que la mitjana de bilirubina dels pacients de classe DIE és superior a la mitjana dels pacients de classe LIVE.
+```{r}
+wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative = 'greater')
+```
+
+### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
+
+## Model supervisat
+En aquest apartat aplicarem la regressió logística per tal de crear un model de classificació supervisat.
+
+## Preparació del conjunt de train i test
+
+```{r}
+library("rminer") # Carreguem la llibreria que utilitzarem per dividir el dataset.
+```
+
+Per tal de poder avaluar els models logístics haurem de dividir el dataset en dos, train i test. Per tal de dividir el conjunt utilitzarem un mètode simple anomenat mètode d'exlucsió (holdout), dividirem el conjunt total en 2/3 per al train i 1/3 per al test.
+```{r}
+h<-holdout(dhep$Class,ratio=2/3,mode="stratified")
+data_train<-dhep[h$tr,]
+data_test<-dhep[h$ts,]
+```
+
+Podem veure com la proporció de morts i vius es manté (la diferencia és molt petita).
+```{r}
+prop.train <- sum(data_train$Class == "Live")/sum(data_train$Class == "Die")
+prop.ori <- sum(dhep$Class == "Live")/sum(dhep$Class == "Die")
+prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
+
+c(prop.ori,prop.train,prop.test)
+```
+
+
 
 
 
