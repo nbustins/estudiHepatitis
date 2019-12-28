@@ -126,7 +126,7 @@ mf.res$OOBerror
 
 ## Valors extrems - outliers
 
-Mostrem una priemra descripció estadística.
+Mostrem una primera descripció estadística.
 ```{r}
 summary(dhep)
 ```
@@ -176,7 +176,6 @@ for (i in catattrs[- which (catattrs %in% list("Class","SEX"))] ){
   dhep[,i] <- as.factor(dhep[,i])
 }
 ```
-
 
 
 # Anàlisi de les dades
@@ -230,20 +229,8 @@ kable(mat) %>% kable_styling()
 ### Comprovació de la l’homoscedasticitat
 En aquest apartat comprovarem si Utilitzarem el test de Levene per la variable AGE i la seva alternativa no paramètrica el test de Fligner-Killeen per a les demés variables ja que no hem assumit normalitat.
 
-```{r}
-mat <- NULL
-alpha <- 0.05
-for (atr in quantattrs){
-  pv <- shapiro.test(dhep[,atr])$p.value
-  mat <- rbind(mat, 
-               c(atr,pv,
-                 ifelse(pv > alpha,"Yes","No"))
-  )
-}
+TODO
 
-colnames(mat) <- c("Variable","P-Value", "Dist. Normal")
-kable(mat) %>% kable_styling()
-```
 
 ### Influencia de les variables quantitatives en si el pacient soberviurà o morirà
 
@@ -263,6 +250,29 @@ wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative 
 ```
 
 ### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
+En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat.
+
+```{r}
+library("ggplot2")
+```
+
+Aplicarem el test a totes les variables categòriques.
+```{r}
+mat <- NULL
+alpha <- 0.05
+for (atr in catattrs){
+  freq.table <- table(dhep$Class,dhep[,atr])
+  
+  pv <- chisq.test(freq.table)$p.value
+  mat <- rbind(mat, 
+               c(atr,pv,
+                 ifelse(pv < alpha,"Yes","No"))
+  )
+}
+
+colnames(mat) <- c("Variable","P-Value", "Relació")
+kable(mat) %>% kable_styling()
+```
 
 ## Model supervisat
 En aquest apartat aplicarem la regressió logística per tal de crear un model de classificació supervisat.
