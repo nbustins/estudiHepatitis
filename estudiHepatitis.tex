@@ -1,0 +1,1362 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Pràctica 2 - Tipologia i cicle de vida de les dades},
+            pdfauthor={Autor: Narcís Bustins Núñez},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Pràctica 2 - Tipologia i cicle de vida de les dades}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Autor: Narcís Bustins Núñez}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Desembre del 2019}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{descripciuxf3-del-dataset}{%
+\section{Descripció del dataset}\label{descripciuxf3-del-dataset}}
+
+El joc seleccionat s'ha obtingut al repositori de machine learning UCI,
+el seu títol és ``Hepatitis Data Set''. Aquest dataset és molt
+interessant per aquesta pràctica, ja que permetrà aplicar algorismes de
+machine learining tant supervisats com no supervisats. El dataset compta
+amb la classe a la qual pertany cada observació segons si ha mort o ha
+sobreviscut, aquesta etiqueta permetrà aplicar algorismes supervisats.
+El dataset compta amb variables tant qualitatives com quantitatives.
+Això serà interessant, ja que podrem aplicar tècniques de discretització
+a les variables quantitatives. És interessant tenir variables dels dos
+tipus per tant de provar diferents algorismes tant els que necessitin
+variables qualitatives com els q necessitin variables quantitatives.
+També hi ha motius d'interès personal per haver seleccionat aquest
+dataset, ja que em sembla especialment interessant com la ciència de
+dades pot ajudar al camp mèdic fent estudis per tal de diagnosticar o
+predir diverses malalties i així poder ajudar a molts humans. Aquest
+dataset es pot utilitzar amb diversos propòsits, per exemple crear
+algorismes tant de deep learining com de machine learining per ajudar a
+fer el seguiment dels pacients amb hepatitis, es pot predir si el
+pacient viurà o morirà, això pot ajudar a comprovar si el tractament que
+s'està seguint està funcionant o no. També es poden buscar les relacions
+que tenen els atributs, quines influeixen més pel diagnòstic.
+
+Aquests són els atributs presents al dataset, els valors de les
+variables qualitatives estan representats numèricament però en aquesta
+descripció indicarem el significat d'aquests.\\
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Class}: Classe a la qual pertany el pacient, viu o mor
+  (Die/Life).
+\item
+  \textbf{AGE}: Indica l'edat del pacient.
+\item
+  \textbf{SEX}: Indica el sexe del pacient(Male/Female).
+\item
+  \textbf{STEROID}: Indica si el pacient ha pres esteroides (yes/no).
+\item
+  \textbf{ANTIVIRALS}: Indica si el pacient ha pres antivirals (yes/no).
+\item
+  \textbf{FATIGUE}: Indica si el pacient és sent fatigat o no (yes/no).
+\item
+  \textbf{MALAISE}: Indica si el pacient sent malestar (yes/no).
+\item
+  \textbf{ANOREXIA}: Indica si el pacient pateix anorèxia (yes/no).
+\item
+  \textbf{LIVER BIG}: Indica si la mida del fetge ha augmentat (yes/no).
+\item
+  \textbf{LIVER FIRM}: Indica si el fetge és manté ferm (yes/no).
+\item
+  \textbf{SPLEEN PAL}: Indica si el pacient presenta esplenomegàlia, una
+  ampliació de la melsa (yes/no).
+\item
+  \textbf{SPIDERS}: Indica si el pacient presenta aranyes(vasos
+  sanguinis engrandits) visibles.
+\item
+  \textbf{ASCITES}: Pesencia de líquid a la cavitat peritoneal (yes/no).
+\item
+  \textbf{VARICES}: Indica si el pacient presenta varius (yes/no).
+\item
+  \textbf{BILIRUBIN}: Indica el nivell de bilirubina del pacient.
+\item
+  \textbf{ALK PHOSPH}: Indica el valor de la fosfatasa alcalina del
+  pacient.
+\item
+  \textbf{SGOT}: Valor obtingut amb l'anàlisi de sang del pacient
+  després de la prova AST.
+\item
+  \textbf{ALBUMIN}: Indica el valor de la proteïna albúmina del pacient.
+\item
+  \textbf{PROTIME}: Indica el valor de la característica del pacient.\\
+\item
+  \textbf{HISTOLOGY}: Indica el valor de'estudiar la histología (estudis
+  microscopics)(yes/no).
+\end{itemize}
+
+\hypertarget{neteja-de-les-dades}{%
+\section{Neteja de les dades}\label{neteja-de-les-dades}}
+
+Llegim el fitxer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dhep <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/hepatitis.csv"}\NormalTok{)}
+\NormalTok{dattrs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Class"}\NormalTok{,}\StringTok{"AGE"}\NormalTok{,}\StringTok{"SEX"}\NormalTok{,}\StringTok{"STEROID"}\NormalTok{,}\StringTok{"ANTIVIRALS"}\NormalTok{,}\StringTok{"FATIGUE"}\NormalTok{,}\StringTok{"MALAISE"}\NormalTok{,}\StringTok{"ANOREXIA"}\NormalTok{,}\StringTok{"LIVER_BIG"}\NormalTok{,}\StringTok{"LIVER_FIRM"}\NormalTok{,}\StringTok{"SPLEEN_PAL"}\NormalTok{,}\StringTok{"SPIDERS"}\NormalTok{,}\StringTok{"ASCITES"}\NormalTok{,}\StringTok{"VARICES"}\NormalTok{,}\StringTok{"BILIRUBIN"}\NormalTok{,}\StringTok{"ALK_PHOSPHATE"}\NormalTok{,}\StringTok{"SGOT"}\NormalTok{,}\StringTok{"ALBUMIN"}\NormalTok{,}\StringTok{"PROTIME"}\NormalTok{,}\StringTok{"HISTOLOGY"}\NormalTok{)}
+
+\KeywordTok{names}\NormalTok{(dhep) <-}\StringTok{ }\NormalTok{dattrs}
+\end{Highlighting}
+\end{Shaded}
+
+Com podem veure el dataset compta amb 154 files amb 20 variables
+(columnes).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(dhep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 154  20
+\end{verbatim}
+
+Primer mirem quin tipus s'ha assignat a cada columna. Es pot veure com
+hi ha variables que s'han llegit amb el tipus erroni, haurem de corregir
+el tipus assignat.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(dhep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    154 obs. of  20 variables:
+##  $ Class        : int  2 2 2 2 2 1 2 2 2 2 ...
+##  $ AGE          : int  50 78 31 34 34 51 23 39 30 39 ...
+##  $ SEX          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ STEROID      : Factor w/ 3 levels "?","1","2": 2 3 1 3 3 2 3 3 3 2 ...
+##  $ ANTIVIRALS   : int  2 2 1 2 2 2 2 2 2 1 ...
+##  $ FATIGUE      : Factor w/ 3 levels "?","1","2": 2 2 3 3 3 2 3 2 3 3 ...
+##  $ MALAISE      : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 3 3 3 3 3 ...
+##  $ ANOREXIA     : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 2 3 3 3 3 ...
+##  $ LIVER_BIG    : Factor w/ 3 levels "?","1","2": 2 3 3 3 3 3 3 3 3 2 ...
+##  $ LIVER_FIRM   : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 3 3 2 3 2 ...
+##  $ SPLEEN_PAL   : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 2 3 3 3 3 ...
+##  $ SPIDERS      : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 2 3 3 3 3 ...
+##  $ ASCITES      : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 3 3 3 3 3 ...
+##  $ VARICES      : Factor w/ 3 levels "?","1","2": 3 3 3 3 3 3 3 3 3 3 ...
+##  $ BILIRUBIN    : Factor w/ 35 levels "?","0.30","0.40",..: 8 6 6 9 8 1 9 6 9 12 ...
+##  $ ALK_PHOSPHATE: Factor w/ 84 levels "?","100","102",..: 19 84 51 1 83 1 1 1 1 73 ...
+##  $ SGOT         : Factor w/ 85 levels "?","100","101",..: 54 48 62 31 44 1 1 60 8 46 ...
+##  $ ALBUMIN      : Factor w/ 30 levels "?","2.1","2.2",..: 13 18 18 18 18 1 1 22 17 22 ...
+##  $ PROTIME      : Factor w/ 45 levels "?","0","100",..: 1 1 42 1 38 1 1 1 1 44 ...
+##  $ HISTOLOGY    : int  1 1 1 1 1 1 1 1 1 1 ...
+\end{verbatim}
+
+Canviem el tipus de les variables numèriques que havien estat llegides
+com a factor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantattrs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"AGE"}\NormalTok{,}\StringTok{"BILIRUBIN"}\NormalTok{,}\StringTok{"ALK_PHOSPHATE"}\NormalTok{,}\StringTok{"SGOT"}\NormalTok{,}\StringTok{"ALBUMIN"}\NormalTok{,}\StringTok{"PROTIME"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ quantattrs)\{}
+\NormalTok{  dhep[,i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(dhep[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Canviem el tipus de les variables factor que han estat llegides
+incorrectament.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{factattrs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Class"}\NormalTok{,}\StringTok{"AGE"}\NormalTok{,}\StringTok{"SEX"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ factattrs)\{}
+\NormalTok{  dhep[,i] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(dhep[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Definim dos vectors amb les variables categòriques i numèriques.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantattrs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"AGE"}\NormalTok{,}\StringTok{"BILIRUBIN"}\NormalTok{,}\StringTok{"ALK_PHOSPHATE"}\NormalTok{,}\StringTok{"SGOT"}\NormalTok{,}\StringTok{"ALBUMIN"}\NormalTok{,}\StringTok{"PROTIME"}\NormalTok{)}
+\NormalTok{catattrs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Class"}\NormalTok{,}\StringTok{"SEX"}\NormalTok{,}\StringTok{"STEROID"}\NormalTok{,}\StringTok{"ANTIVIRALS"}\NormalTok{,}\StringTok{"FATIGUE"}\NormalTok{,}\StringTok{"MALAISE"}\NormalTok{,}\StringTok{"ANOREXIA"}\NormalTok{,}\StringTok{"LIVER_BIG"}\NormalTok{,}\StringTok{"LIVER_FIRM"}\NormalTok{,}\StringTok{"SPLEEN_PAL"}\NormalTok{,}\StringTok{"SPIDERS"}\NormalTok{,}\StringTok{"ASCITES"}\NormalTok{,}\StringTok{"VARICES"}\NormalTok{,}\StringTok{"HISTOLOGY"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{valors-desconeguts}{%
+\subsection{Valors desconeguts}\label{valors-desconeguts}}
+
+En la primera insepecció hem pogut veure com hi ha valors desconeguts
+representats amb el signe interrogant. Mirarem quines columnes tenen
+valors desconeguts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colSums}\NormalTok{(dhep }\OperatorTok{==}\StringTok{ "?"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Class           AGE           SEX       STEROID    ANTIVIRALS 
+##             0             0             0             1             0 
+##       FATIGUE       MALAISE      ANOREXIA     LIVER_BIG    LIVER_FIRM 
+##             1             1             1            10            11 
+##    SPLEEN_PAL       SPIDERS       ASCITES       VARICES     BILIRUBIN 
+##             5             5             5             5             0 
+## ALK_PHOSPHATE          SGOT       ALBUMIN       PROTIME     HISTOLOGY 
+##             0             0             0             0             0
+\end{verbatim}
+
+Mirem si hi ha algun valor NA. Podem veure que no.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colSums}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(dhep))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Class           AGE           SEX       STEROID    ANTIVIRALS 
+##             0             0             0             0             0 
+##       FATIGUE       MALAISE      ANOREXIA     LIVER_BIG    LIVER_FIRM 
+##             0             0             0             0             0 
+##    SPLEEN_PAL       SPIDERS       ASCITES       VARICES     BILIRUBIN 
+##             0             0             0             0             0 
+## ALK_PHOSPHATE          SGOT       ALBUMIN       PROTIME     HISTOLOGY 
+##             0             0             0             0             0
+\end{verbatim}
+
+Canviarem el valor de l'interrogant per NA. Guardem en un vector tots
+els atributs que contenen valors desconeguts i seguidament apliquem el
+canvi.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missingattrs <-}\StringTok{ }\KeywordTok{names}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(dhep }\OperatorTok{==}\StringTok{ "?"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ (m }\ControlFlowTok{in}\NormalTok{ missingattrs)\{}
+\NormalTok{  dhep[}\KeywordTok{which}\NormalTok{(dhep[,m] }\OperatorTok{==}\StringTok{ '?'}\NormalTok{),m] <-}\StringTok{ }\OtherTok{NA}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+El primer que farem serà imputar els valors perduts que tenim al
+dataset, com que aquest dataset no és excessivament gran preferim
+aproximar els valors en comptes d'eliminar les observacions que compten
+amb mising values és a dir, assumirem un petit grau d'error a canvi de
+mantenir més observacions. A l'hora d'aplicar algorismes supervisats és
+interessant tenir grans datasets ja que es poden dividir en el dataset
+de train i el de test. En el primer apartat d'anàlisi exploratori hem
+comprovat com hi ha diversos atributs que tenen valors perduts. Per tal
+d'imputar els valors perduts utilitzarem el mètode missForest ja que
+últimament està guanyant popularitat i s'utilitza amb variables mixtes.
+Encara que el kNN és un dels més populars aquest, és molt sensible a la
+k que es tria.
+
+Eliminem la columna que no volem utilitzar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#dhep$PROTIME <- NULL}
+\end{Highlighting}
+\end{Shaded}
+
+Imputem els valors de les variables. Carreguem la llibreria i apliquem
+la funció.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"missForest"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: randomForest
+\end{verbatim}
+
+\begin{verbatim}
+## randomForest 4.6-14
+\end{verbatim}
+
+\begin{verbatim}
+## Type rfNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: foreach
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: itertools
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: iterators
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mf.res <-}\StringTok{ }\KeywordTok{missForest}\NormalTok{(dhep, }\DataTypeTok{variablewise =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   missForest iteration 1 in progress...done!
+##   missForest iteration 2 in progress...done!
+##   missForest iteration 3 in progress...done!
+\end{verbatim}
+
+Podem veure com tots els valors NA han desaparegut, han estat imputats.
+També podem obtenir informació sobre l'error, es pot veure com les
+columnes que no tenien cap valor per imputar tenen un error de 0, les
+columnes on s'han imputat valors presenten els seus corresponents
+errors, això pot afectar a l'estudi ja que els valors no són reals
+simplement són suposicions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dhep <-}\StringTok{ }\NormalTok{mf.res}\OperatorTok{$}\NormalTok{ximp}
+\KeywordTok{colSums}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(dhep))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Class           AGE           SEX       STEROID    ANTIVIRALS 
+##             0             0             0             0             0 
+##       FATIGUE       MALAISE      ANOREXIA     LIVER_BIG    LIVER_FIRM 
+##             0             0             0             0             0 
+##    SPLEEN_PAL       SPIDERS       ASCITES       VARICES     BILIRUBIN 
+##             0             0             0             0             0 
+## ALK_PHOSPHATE          SGOT       ALBUMIN       PROTIME     HISTOLOGY 
+##             0             0             0             0             0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mf.res}\OperatorTok{$}\NormalTok{OOBerror}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       MSE       MSE       MSE       PFC       MSE       PFC       PFC 
+## 0.0000000 0.0000000 0.0000000 0.4379085 0.0000000 0.2091503 0.1960784 
+##       PFC       PFC       PFC       PFC       PFC       PFC       PFC 
+## 0.2352941 0.1875000 0.2937063 0.2818792 0.2416107 0.1140940 0.1275168 
+##       MSE       MSE       MSE       MSE       MSE       MSE 
+## 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+\end{verbatim}
+
+\hypertarget{valors-extrems---outliers}{%
+\subsection{Valors extrems - outliers}\label{valors-extrems---outliers}}
+
+Mostrem una primera descripció estadística.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(dhep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Class            AGE             SEX        STEROID   ANTIVIRALS   
+##  Min.   :1.000   Min.   : 7.00   Min.   :1.000   ?: 0    Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:32.00   1st Qu.:1.000   1:75    1st Qu.:2.000  
+##  Median :2.000   Median :39.00   Median :1.000   2:79    Median :2.000  
+##  Mean   :1.792   Mean   :41.27   Mean   :1.097           Mean   :1.844  
+##  3rd Qu.:2.000   3rd Qu.:50.00   3rd Qu.:1.000           3rd Qu.:2.000  
+##  Max.   :2.000   Max.   :78.00   Max.   :2.000           Max.   :2.000  
+##  FATIGUE MALAISE ANOREXIA LIVER_BIG LIVER_FIRM SPLEEN_PAL SPIDERS ASCITES
+##  ?:  0   ?: 0    ?:  0    ?:  0     ?: 0       ?:  0      ?:  0   ?:  0  
+##  1:100   1:61    1: 32    1: 24     1:62       1: 31      1: 52   1: 21  
+##  2: 54   2:93    2:122    2:130     2:92       2:123      2:102   2:133  
+##                                                                          
+##                                                                          
+##                                                                          
+##  VARICES   BILIRUBIN     ALK_PHOSPHATE        SGOT          ALBUMIN     
+##  ?:  0   Min.   : 1.00   Min.   : 1.00   Min.   : 1.00   Min.   : 1.00  
+##  1: 18   1st Qu.: 6.00   1st Qu.: 8.25   1st Qu.:29.25   1st Qu.: 9.25  
+##  2:136   Median : 9.00   Median :40.50   Median :47.50   Median :17.00  
+##          Mean   :11.45   Mean   :40.13   Mean   :46.60   Mean   :14.70  
+##          3rd Qu.:14.00   3rd Qu.:71.00   3rd Qu.:66.75   3rd Qu.:20.00  
+##          Max.   :35.00   Max.   :84.00   Max.   :85.00   Max.   :30.00  
+##     PROTIME        HISTOLOGY    
+##  Min.   : 1.00   Min.   :1.000  
+##  1st Qu.: 1.00   1st Qu.:1.000  
+##  Median : 3.00   Median :1.000  
+##  Mean   :13.36   Mean   :1.455  
+##  3rd Qu.:25.75   3rd Qu.:2.000  
+##  Max.   :45.00   Max.   :2.000
+\end{verbatim}
+
+Analitzem els valors extrems, comprovem quins atributs de tipus
+quantitatiu presenten possibles valors extrems. Com veiem els atributs
+AGE i BILIRUBIN tenen alguns valors extrems, en el proper apartat
+valorarem si realment són tan extrems i prendrem decissions sobre com
+tractar-ho.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (col }\ControlFlowTok{in}\NormalTok{ quantattrs)\{}
+  \KeywordTok{cat}\NormalTok{(}\StringTok{"col:"}\NormalTok{,col,}\StringTok{"Outliers:"}\NormalTok{,}\KeywordTok{length}\NormalTok{(}\KeywordTok{boxplot.stats}\NormalTok{(dhep[,col])}\OperatorTok{$}\NormalTok{out),}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## col: AGE Outliers: 1 
+## col: BILIRUBIN Outliers: 13 
+## col: ALK_PHOSPHATE Outliers: 0 
+## col: SGOT Outliers: 0 
+## col: ALBUMIN Outliers: 0 
+## col: PROTIME Outliers: 0
+\end{verbatim}
+
+Procedim a analitzar cadascun dels valors que es podria considerar
+outlier.
+
+En aquest primer cas la variable AGE representa l'edat, un valor de 78
+anys no es pot considerar un outiler, mantindrem aquest valor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{AGE)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot.stats}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{AGE)}\OperatorTok{$}\NormalTok{out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 78
+\end{verbatim}
+
+En aquest segon cas el nivell de bilirubina és més complex. Cal fer
+recerca sobre quins nivells màxims i mínims són possibles en pacient
+d'hepatitis. Segons les fonts consultades els valors més elevats de
+bilirubina indiquen problemes més greus, en propers apartats buscarem la
+relació de la bilirubina amb la vida o mort del pacient utilitzant
+testos d'estadística inferencial. Els nivells normals de bilirubina
+varien en un rang d'1 fins a 1.2 (mg/dL), a partir dels 2(mg/dL) la pell
+agafa un color groguenc. Sembla que aquests són valors molt elevats però
+dintre un rang possible, ja que s'indica que a partir dels 30 mg/dL el
+pacient es troba en estat molt crític.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{BILIRUBIN)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot.stats}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{BILIRUBIN)}\OperatorTok{$}\NormalTok{out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 32 28 30 32 33 32 27 27 32 35 29 31 34
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{BILIRUBIN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    6.00    9.00   11.45   14.00   35.00
+\end{verbatim}
+
+Com hem vist els valors dels nivells de les variables categòriques no
+són explicatius, actualment es troben representats amb valors numèrics,
+canviarem aquests valors, ja que pot ser útil quan apliquem futurs
+algorismes i vulguem extreure conclusions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,}\StringTok{"Class"}\NormalTok{] <-}\StringTok{ 'Die'}
+\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{,}\StringTok{"Class"}\NormalTok{] <-}\StringTok{ 'Live'}
+
+\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{SEX }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,}\StringTok{"SEX"}\NormalTok{] <-}\StringTok{ 'Male'}
+\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{SEX }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{,}\StringTok{"SEX"}\NormalTok{] <-}\StringTok{ 'Female'}
+
+\NormalTok{dhep}\OperatorTok{$}\NormalTok{SEX <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{SEX)}
+\NormalTok{dhep}\OperatorTok{$}\NormalTok{Class <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{Class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Transformem a caràcter. canviem el valors dels nivells i tornem a transformar a factor, així eliminem els nivells '?' missing.}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ catattrs[}\OperatorTok{-}\StringTok{ }\KeywordTok{which}\NormalTok{ (catattrs }\OperatorTok{%in%}\StringTok{ }\KeywordTok{list}\NormalTok{(}\StringTok{"Class"}\NormalTok{,}\StringTok{"SEX"}\NormalTok{))] )\{}
+\NormalTok{  dhep[,i] <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(dhep[,i])}
+  
+\NormalTok{  dhep[ dhep[,i] }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,i] <-}\StringTok{ 'Yes'}
+\NormalTok{  dhep[ dhep[,i] }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{,i] <-}\StringTok{ 'No'}
+  
+\NormalTok{  dhep[,i] <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(dhep[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe0lisi-de-les-dades}{%
+\section{Anàlisi de les dades}\label{anuxe0lisi-de-les-dades}}
+
+\hypertarget{seleccio-dels-grups-a-analitzar}{%
+\section{Seleccio dels grups a
+analitzar}\label{seleccio-dels-grups-a-analitzar}}
+
+En aquest apartat prepararem grups que poden ser d'interés per tal
+d'analitzar o comparar. En futurs apartats els utilitzarem per tal
+d'extreure conclusions.
+
+Pacients que han mort d'hepatitis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dhep.die <-}\StringTok{ }\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Die"}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+Pacients que han soberviscut a l'hepatitis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dhep.live <-}\StringTok{ }\NormalTok{dhep[dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Live"}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{proves-estaduxedstiques}{%
+\subsection{Proves estadístiques}\label{proves-estaduxedstiques}}
+
+\hypertarget{comprovaciuxf3-de-normalitat}{%
+\subsubsection{Comprovació de
+normalitat}\label{comprovaciuxf3-de-normalitat}}
+
+Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per
+tal de veure en quins casos podem assumir normalitat i en quins no.
+utilitzarem aquest test ja que es considera el més robust per tal de fer
+la prova de normalitat. Les hipòtesis que planteja el test són les
+seg¨üents:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{H\_0}: La mostra \& prové d'una població amb distribució
+  normal.
+\item
+  \textbf{H\_1}: La mostra no prové d'una població amb distribució
+  normal.
+\end{itemize}
+
+Si rebutjem la hipòtesis nul·la no podrem dir que les mostres vinguin
+d'una població amb distribució normal, d'altra forma si acceptem la
+hipòtsis nul·la és a dir el p-valor és superior a 0.05 podrem assumir
+normalitat.
+
+Carreguem una llibreria útil per fer taules.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"kableExtra"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Com podem veure l'única variable que segueix una distribució normal és
+l'edat ``AGE''. Prendrem una conclusió conservadora i no assumirem la
+normalitat de les demés variables (no aplicarem el teorema del límit
+central).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{alpha <-}\StringTok{ }\FloatTok{0.05}
+\ControlFlowTok{for}\NormalTok{ (atr }\ControlFlowTok{in}\NormalTok{ quantattrs)\{}
+\NormalTok{  pv <-}\StringTok{ }\KeywordTok{shapiro.test}\NormalTok{(dhep[,atr])}\OperatorTok{$}\NormalTok{p.value}
+\NormalTok{  mat <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(mat, }
+               \KeywordTok{c}\NormalTok{(atr,pv,}
+                 \KeywordTok{ifelse}\NormalTok{(pv }\OperatorTok{>}\StringTok{ }\NormalTok{alpha,}\StringTok{"Yes"}\NormalTok{,}\StringTok{"No"}\NormalTok{))}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\KeywordTok{colnames}\NormalTok{(mat) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Variable"}\NormalTok{,}\StringTok{"P-Value"}\NormalTok{, }\StringTok{"Dist. Normal"}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(mat) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable_styling}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l}
+\hline
+Variable & P-Value & Dist. Normal\\
+\hline
+AGE & 0.103350455455303 & Yes\\
+\hline
+BILIRUBIN & 9.51870650701998e-12 & No\\
+\hline
+ALK\_PHOSPHATE & 4.00023337886688e-10 & No\\
+\hline
+SGOT & 0.000154910327946493 & No\\
+\hline
+ALBUMIN & 1.2353582877028e-06 & No\\
+\hline
+PROTIME & 1.72368503302654e-13 & No\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{comprovaciuxf3-de-la-lhomoscedasticitat}{%
+\subsubsection{Comprovació de la
+l'homoscedasticitat}\label{comprovaciuxf3-de-la-lhomoscedasticitat}}
+
+En aquest apartat comprovarem si Utilitzarem el test de Levene per la
+variable AGE i la seva alternativa no paramètrica el test de
+Fligner-Killeen per a les demés variables ja que no hem assumit
+normalitat.
+
+\hypertarget{influencia-de-les-variables-quantitatives-en-si-el-pacient-soberviuruxe0-o-moriruxe0}{%
+\subsubsection{Influencia de les variables quantitatives en si el
+pacient soberviurà o
+morirà}\label{influencia-de-les-variables-quantitatives-en-si-el-pacient-soberviuruxe0-o-moriruxe0}}
+
+\hypertarget{proves-paramuxe8triques}{%
+\subsubsection{Proves paramètriques}\label{proves-paramuxe8triques}}
+
+En aquest apartat aplicarem el test de t Student
+
+\hypertarget{edat}{%
+\subsubsection{Edat}\label{edat}}
+
+En aquest cas utilitzarem un test paramètric, hem pogut assumir
+normalitat després d'aplicar el test de shapiro wilk. Utilitzarem doncs
+el test de t-student.\\
+Com podem veure el p-valor obtingut és inferior a 0.05, rebutgem la
+hipòtesi nul·la i acceptem l'alternativa. La mitjana d'edat dels
+pacients que moren és superior a l'edat mitjana dels que viuen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(dhep.die}\OperatorTok{$}\NormalTok{AGE,dhep.live}\OperatorTok{$}\NormalTok{AGE,}\DataTypeTok{alternative =} \StringTok{'greater'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  dhep.die$AGE and dhep.live$AGE
+## t = 3.1862, df = 61.099, p-value = 0.001136
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  3.195834      Inf
+## sample estimates:
+## mean of x mean of y 
+##  46.59375  39.87705
+\end{verbatim}
+
+\hypertarget{bilirubina}{%
+\subsubsection{Bilirubina}\label{bilirubina}}
+
+Investigarem si la mitjana de bilirubina dels pacients de la classe DIE
+és superior als pacients de la classe LIVE. Com a hipòtesi nul·la
+tindrem que les dues classes tenen nivells de bilirubina iguals, com a
+alternativa direm que la mitjana de bilirubina dels pacients que moren
+és superior als que viuen. Utilitzarem un test no paramètric, el wilcox
+test. Com hem comprovat el test de shapiro wilk no ens ha assegurat que
+puguem assumir normalitat. Segons el p-value obtingut rebutgem la
+hipòtesi nul·la i acceptem l'alternativa, ja que és menor a 0.05. Podem
+dir que la mitjana de bilirubina dels pacients de classe DIE és superior
+a la mitjana dels pacients de classe LIVE.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(dhep.die}\OperatorTok{$}\NormalTok{BILIRUBIN,dhep.live}\OperatorTok{$}\NormalTok{BILIRUBIN, }\DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{'greater'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  dhep.die$BILIRUBIN and dhep.live$BILIRUBIN
+## W = 2834, p-value = 3.957e-05
+## alternative hypothesis: true location shift is greater than 0
+\end{verbatim}
+
+\hypertarget{variables-qualitatives-que-influeixen-muxe9s-en-si-el-pacient-soberviuruxe0-o-moriruxe0}{%
+\subsubsection{Variables qualitatives que influeixen més en si el
+pacient soberviurà o
+morirà}\label{variables-qualitatives-que-influeixen-muxe9s-en-si-el-pacient-soberviuruxe0-o-moriruxe0}}
+
+En aquest apartat intentarem descobrir quines variables qualitatives
+influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test
+de chi quadrat. Aquest test ens indica si dues variables són depenents o
+independents, quan rebutjem la hipòtesis nul·la direm que hi ha una
+relació entre les dues variables. Comprovarem si hi ha relació entre
+totes les variables categòriques i la classe, és a dir la variable que
+ens indica si el pacient viu o mor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'ggplot2'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:randomForest':
+## 
+##     margin
+\end{verbatim}
+
+Aplicarem el test a totes les variables categòriques. Com podem veure a
+la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN\_PAL, SPIDERS,
+ASCITES, VARICES, HISTOLOGY.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{alpha <-}\StringTok{ }\FloatTok{0.05}
+\ControlFlowTok{for}\NormalTok{ (atr }\ControlFlowTok{in}\NormalTok{ catattrs[}\OperatorTok{-}\KeywordTok{which}\NormalTok{(catattrs }\OperatorTok{%in%}\StringTok{ "Class"}\NormalTok{)])\{}
+\NormalTok{  freq.table <-}\StringTok{ }\KeywordTok{table}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{Class,dhep[,atr])}
+  
+\NormalTok{  pv <-}\StringTok{ }\KeywordTok{chisq.test}\NormalTok{(freq.table)}\OperatorTok{$}\NormalTok{p.value}
+\NormalTok{  mat <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(mat, }
+               \KeywordTok{c}\NormalTok{(atr,pv,}
+                 \KeywordTok{ifelse}\NormalTok{(pv }\OperatorTok{<}\StringTok{ }\NormalTok{alpha,}\StringTok{"Yes"}\NormalTok{,}\StringTok{"No"}\NormalTok{))}
+\NormalTok{  )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in chisq.test(freq.table): Chi-squared approximation may be
+## incorrect
+
+## Warning in chisq.test(freq.table): Chi-squared approximation may be
+## incorrect
+
+## Warning in chisq.test(freq.table): Chi-squared approximation may be
+## incorrect
+
+## Warning in chisq.test(freq.table): Chi-squared approximation may be
+## incorrect
+
+## Warning in chisq.test(freq.table): Chi-squared approximation may be
+## incorrect
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mat) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Variable"}\NormalTok{,}\StringTok{"P-Value"}\NormalTok{, }\StringTok{"Relació")}
+\StringTok{kable(mat) %>% kable_styling()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l}
+\hline
+Variable & P-Value & Relació\\
+\hline
+SEX & 0.0796189439950327 & No\\
+\hline
+STEROID & 0.119734506305366 & No\\
+\hline
+ANTIVIRALS & 0.173247546792783 & No\\
+\hline
+FATIGUE & 0.000283623525807864 & Yes\\
+\hline
+MALAISE & 6.61626777671667e-05 & Yes\\
+\hline
+ANOREXIA & 0.162879415955493 & No\\
+\hline
+LIVER\_BIG & 0.415495439185429 & No\\
+\hline
+LIVER\_FIRM & 0.512590342453942 & No\\
+\hline
+SPLEEN\_PAL & 0.00269169673868139 & Yes\\
+\hline
+SPIDERS & 9.036527779379e-07 & Yes\\
+\hline
+ASCITES & 4.45314447847816e-09 & Yes\\
+\hline
+VARICES & 2.93064976157634e-05 & Yes\\
+\hline
+HISTOLOGY & 7.16841274432988e-05 & Yes\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{model-supervisat}{%
+\subsection{Model supervisat}\label{model-supervisat}}
+
+En aquest apartat aplicarem la regressió logística per tal de crear un
+model de classificació supervisat.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"pROC"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Type 'citation("pROC")' for a citation.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'pROC'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     cov, smooth, var
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"caret"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\hypertarget{preparaciuxf3-del-conjunt-de-train-i-test}{%
+\subsection{Preparació del conjunt de train i
+test}\label{preparaciuxf3-del-conjunt-de-train-i-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"rminer"}\NormalTok{) }\CommentTok{# Carreguem la llibreria que utilitzarem per dividir el dataset.}
+\end{Highlighting}
+\end{Shaded}
+
+Per tal de poder avaluar els models logístics haurem de dividir el
+dataset en dos, train i test. Per tal de dividir el conjunt utilitzarem
+un mètode simple anomenat mètode d'exlucsió (holdout), dividirem el
+conjunt total en 2/3 per al train i 1/3 per al test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h<-}\KeywordTok{holdout}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{Class,}\DataTypeTok{ratio=}\DecValTok{2}\OperatorTok{/}\DecValTok{3}\NormalTok{,}\DataTypeTok{mode=}\StringTok{"stratified"}\NormalTok{)}
+\NormalTok{data_train<-dhep[h}\OperatorTok{$}\NormalTok{tr,]}
+\NormalTok{data_test<-dhep[h}\OperatorTok{$}\NormalTok{ts,]}
+\end{Highlighting}
+\end{Shaded}
+
+Podem veure com la proporció de morts i vius es manté (la diferencia és
+molt petita).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prop.train <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(data_train}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Live"}\NormalTok{)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(data_train}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Die"}\NormalTok{)}
+\NormalTok{prop.ori <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Live"}\NormalTok{)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(dhep}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Die"}\NormalTok{)}
+\NormalTok{prop.test <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Live"}\NormalTok{)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class }\OperatorTok{==}\StringTok{ "Die"}\NormalTok{)}
+
+\KeywordTok{c}\NormalTok{(prop.ori,prop.train,prop.test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.812500 3.857143 3.727273
+\end{verbatim}
+
+\hypertarget{regressiuxf3-loguxedstica-utilitzant-unicament-variables-quantitatives.}{%
+\subsubsection{Regressió logística utilitzant unicament variables
+quantitatives.}\label{regressiuxf3-loguxedstica-utilitzant-unicament-variables-quantitatives.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log.quant <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ dhep, Class}\OperatorTok{~}\StringTok{ }\NormalTok{AGE }\OperatorTok{+}\StringTok{ }\NormalTok{BILIRUBIN}\OperatorTok{+}\StringTok{ }\NormalTok{ALK_PHOSPHATE }\OperatorTok{+}\StringTok{ }\NormalTok{SGOT}\OperatorTok{+}\StringTok{ }\NormalTok{ALBUMIN}\OperatorTok{+}\StringTok{ }\NormalTok{PROTIME, }
+                 \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"logit"}\NormalTok{) )}
+\KeywordTok{summary}\NormalTok{(log.quant)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Class ~ AGE + BILIRUBIN + ALK_PHOSPHATE + SGOT + 
+##     ALBUMIN + PROTIME, family = binomial(link = "logit"), data = dhep)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.6776   0.1906   0.2992   0.5397   2.4099  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)    1.916611   1.130479   1.695 0.090000 .  
+## AGE           -0.031282   0.019557  -1.600 0.109707    
+## BILIRUBIN     -0.105696   0.027781  -3.805 0.000142 ***
+## ALK_PHOSPHATE  0.001488   0.008949   0.166 0.867947    
+## SGOT           0.008361   0.010196   0.820 0.412161    
+## ALBUMIN        0.143233   0.041110   3.484 0.000494 ***
+## PROTIME       -0.003265   0.020832  -0.157 0.875474    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 157.39  on 153  degrees of freedom
+## Residual deviance: 109.86  on 147  degrees of freedom
+## AIC: 123.86
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+Podem veure com utilitzant simplement els atributs quantitatius obtenim
+un model bastant bo amb un AUC de 0.825.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction.quant <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(log.quant, data_test, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+
+\NormalTok{pROC.quant <-}\StringTok{ }\KeywordTok{roc}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class, prediction.quant, }\DataTypeTok{plot =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{print.auc =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = Die, case = Live
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{coords}\NormalTok{(pROC.quant, }\StringTok{"best"}\NormalTok{, }\StringTok{"threshold"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in coords.roc(pROC.quant, "best", "threshold"): An upcoming
+## version of pROC will set the 'transpose' argument to FALSE by default.
+## Set transpose = TRUE explicitly to keep the current behavior, or
+## transpose = FALSE to adopt the new one and silence this warning. Type
+## help(coords_transpose) for additional information.
+\end{verbatim}
+
+\begin{verbatim}
+##   threshold specificity sensitivity 
+##   0.6743504   0.8181818   0.7804878
+\end{verbatim}
+
+\hypertarget{regressiuxf3-loguxedstica-utilitzant-unicament-variables-qualitatives.}{%
+\subsubsection{Regressió logística utilitzant unicament variables
+qualitatives.}\label{regressiuxf3-loguxedstica-utilitzant-unicament-variables-qualitatives.}}
+
+En aquest apartat utilitzarem les variables qualitatives que hem
+determinat, tenen efecte sobre si el pacient viurà o morirà utilitzant
+la prova de chi quadrat. Observem el p-valor que s'obté, awuest
+correspon al test de Wald i ens indica si el coeficient és
+significativament diferent de 0. En aquest cas eliminarem les variables
+amb un p-valor superior a 0.10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log.qual <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ dhep, Class}\OperatorTok{~}\StringTok{ }\NormalTok{FATIGUE}\OperatorTok{+}\NormalTok{MALAISE}\OperatorTok{+}\NormalTok{SPLEEN_PAL}\OperatorTok{+}\NormalTok{SPIDERS}\OperatorTok{+}\NormalTok{ASCITES}\OperatorTok{+}\NormalTok{VARICES}\OperatorTok{+}\NormalTok{HISTOLOGY,}
+                 \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"logit"}\NormalTok{) )}
+\KeywordTok{summary}\NormalTok{(log.qual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Class ~ FATIGUE + MALAISE + SPLEEN_PAL + SPIDERS + 
+##     ASCITES + VARICES + HISTOLOGY, family = binomial(link = "logit"), 
+##     data = dhep)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.5934   0.1971   0.2670   0.4350   2.0046  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)     3.3275     0.8241   4.038  5.4e-05 ***
+## FATIGUEYes     -0.6149     0.9544  -0.644  0.51938    
+## MALAISEYes     -1.0064     0.6446  -1.561  0.11845    
+## SPLEEN_PALYes  -0.9268     0.5829  -1.590  0.11183    
+## SPIDERSYes     -0.9864     0.5576  -1.769  0.07690 .  
+## ASCITESYes     -1.6582     0.6340  -2.616  0.00891 ** 
+## VARICESYes     -0.7559     0.6615  -1.143  0.25315    
+## HISTOLOGYYes    0.6040     0.5974   1.011  0.31199    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 157.39  on 153  degrees of freedom
+## Residual deviance: 101.81  on 146  degrees of freedom
+## AIC: 117.81
+## 
+## Number of Fisher Scoring iterations: 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction.qual <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(log.qual, data_test, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+
+\NormalTok{pROC.qual <-}\StringTok{ }\KeywordTok{roc}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class, prediction.qual, }\DataTypeTok{plot =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{print.auc =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = Die, case = Live
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{coords}\NormalTok{(pROC.qual, }\StringTok{"best"}\NormalTok{, }\StringTok{"threshold"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in coords.roc(pROC.qual, "best", "threshold"): An upcoming
+## version of pROC will set the 'transpose' argument to FALSE by default.
+## Set transpose = TRUE explicitly to keep the current behavior, or
+## transpose = FALSE to adopt the new one and silence this warning. Type
+## help(coords_transpose) for additional information.
+\end{verbatim}
+
+\begin{verbatim}
+##   threshold specificity sensitivity 
+##   0.8381383   0.9090909   0.8292683
+\end{verbatim}
+
+\hypertarget{reducciuxf3-del-model}{%
+\paragraph{Reducció del model}\label{reducciuxf3-del-model}}
+
+Preparem el model reduit, hem eliminat les variables que tenien un
+p-valor superior a 0.10 al test de Wald i ens hem quedat amb SPIDERS i
+ASCITES.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log.qual.red <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ dhep, Class}\OperatorTok{~}\NormalTok{SPIDERS}\OperatorTok{+}\NormalTok{ASCITES,}
+                 \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"logit"}\NormalTok{) )}
+\KeywordTok{summary}\NormalTok{(log.qual.red)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Class ~ SPIDERS + ASCITES, family = binomial(link = "logit"), 
+##     data = dhep)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.3321   0.3693   0.3693   0.3693   1.8575  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)   2.6512     0.3862   6.864 6.69e-12 ***
+## SPIDERSYes   -1.7483     0.4875  -3.587 0.000335 ***
+## ASCITESYes   -2.4319     0.5884  -4.133 3.58e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 157.39  on 153  degrees of freedom
+## Residual deviance: 113.40  on 151  degrees of freedom
+## AIC: 119.4
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un
+valor de 0.812 i hem reduït el model utilitzant només dues variables.
+Naturalment l'AUC ha disminuit ja que les demés variables aportaven una
+mica d'informació encara que no fos extremadament significativa però amb
+aquesta versió reduïda hem aconseguit un model molt més petit sense
+comprometre en gran mesura la capacitat predictiva.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction.qual.red <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(log.qual.red, data_test, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+
+\NormalTok{pROC.qual.red <-}\StringTok{ }\KeywordTok{roc}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class, prediction.qual.red, }\DataTypeTok{plot =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{print.auc =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = Die, case = Live
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-36-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{coords}\NormalTok{(pROC.qual.red, }\StringTok{"best"}\NormalTok{, }\StringTok{"threshold"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in coords.roc(pROC.qual.red, "best", "threshold"): An upcoming
+## version of pROC will set the 'transpose' argument to FALSE by default.
+## Set transpose = TRUE explicitly to keep the current behavior, or
+## transpose = FALSE to adopt the new one and silence this warning. Type
+## help(coords_transpose) for additional information.
+\end{verbatim}
+
+\begin{verbatim}
+##   threshold specificity sensitivity 
+##   0.8228230   0.9090909   0.7560976
+\end{verbatim}
+
+\hypertarget{regressiuxf3-loguxedstica-utilitzant-variables-mixtes.}{%
+\subsubsection{Regressió logística utilitzant variables
+mixtes.}\label{regressiuxf3-loguxedstica-utilitzant-variables-mixtes.}}
+
+En aquest ultim model utilitzarem les variables tant qualitatives com
+quantitatives que hem vist que tenien més efecte en els models. Veiem
+que totes les variables aporten, segons el test de Wald els coeficients
+que obtenim són significativament diferents de 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log.mixt<-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ dhep, Class}\OperatorTok{~}\NormalTok{SPIDERS}\OperatorTok{+}\NormalTok{ASCITES}\OperatorTok{+}\NormalTok{BILIRUBIN}\OperatorTok{+}\NormalTok{ALBUMIN,}
+                 \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"logit"}\NormalTok{) )}
+\KeywordTok{summary}\NormalTok{(log.mixt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Class ~ SPIDERS + ASCITES + BILIRUBIN + ALBUMIN, 
+##     family = binomial(link = "logit"), data = dhep)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.8150   0.1363   0.2057   0.4979   1.6758  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  1.93419    0.68635   2.818 0.004831 ** 
+## SPIDERSYes  -1.77657    0.56298  -3.156 0.001601 ** 
+## ASCITESYes  -1.67104    0.63659  -2.625 0.008665 ** 
+## BILIRUBIN   -0.08176    0.02969  -2.753 0.005897 ** 
+## ALBUMIN      0.14088    0.04113   3.426 0.000614 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 157.393  on 153  degrees of freedom
+## Residual deviance:  90.992  on 149  degrees of freedom
+## AIC: 100.99
+## 
+## Number of Fisher Scoring iterations: 6
+\end{verbatim}
+
+Podem veure com l'AUC ha augmentat lleugerament, tenint en compte els
+nivells obtinguts que ja eren molt bons hem aconseguit una millora
+utilitzant variables mixtes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction.mixt <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(log.mixt, data_test, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+
+\NormalTok{pROC.mixt <-}\StringTok{ }\KeywordTok{roc}\NormalTok{(data_test}\OperatorTok{$}\NormalTok{Class, prediction.mixt, }\DataTypeTok{plot =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{print.auc =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Setting levels: control = Die, case = Live
+\end{verbatim}
+
+\begin{verbatim}
+## Setting direction: controls < cases
+\end{verbatim}
+
+\includegraphics{estudiHepatitis_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{coords}\NormalTok{(pROC.mixt, }\StringTok{"best"}\NormalTok{, }\StringTok{"threshold"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in coords.roc(pROC.mixt, "best", "threshold"): An upcoming
+## version of pROC will set the 'transpose' argument to FALSE by default.
+## Set transpose = TRUE explicitly to keep the current behavior, or
+## transpose = FALSE to adopt the new one and silence this warning. Type
+## help(coords_transpose) for additional information.
+\end{verbatim}
+
+\begin{verbatim}
+##   threshold specificity sensitivity 
+##   0.8141618   0.9090909   0.7317073
+\end{verbatim}
+
+
+\end{document}

@@ -2,10 +2,11 @@
 title: 'Pràctica 2 - Tipologia i cicle de vida de les dades'
 author: "Autor: Narcís Bustins Núñez"
 date: "Desembre del 2019"
-number_sections: yes
 output:
-  html_document: default
-  pdf_document: default
+  html_document: 
+    toc: yes
+  pdf_document: 
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -284,6 +285,12 @@ library("pROC")
 library("caret")
 ```
 
+Recodifiquem l'ordre dels nivells ja que, entendrem Die com a el cas positiu i Live com el cas negatiu seguint amb la lògica de cas positiu quan es detecta una malaltia.
+```{r}
+dhep$Class <- relevel(dhep$Class,"Live")
+```
+
+
 ## Preparació del conjunt de train i test
 
 ```{r}
@@ -306,7 +313,6 @@ prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
 c(prop.ori,prop.train,prop.test)
 ```
 
-
 ### Regressió logística utilitzant unicament variables quantitatives.
 ```{r}
 log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBUMIN+ PROTIME, 
@@ -314,8 +320,7 @@ log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBU
 summary(log.quant)
 ```
 
-
-Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.825.
+Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.847.
 ```{r}
 prediction.quant <- predict(log.quant, data_test, type = "response")
 
@@ -347,7 +352,7 @@ log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
 summary(log.qual.red)
 ```
 
-Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.812 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit ja que les demés variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit sense comprometre en gran mesura la capacitat predictiva.
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.768 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit ja que les demés variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit.
 ```{r}
 prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
 
@@ -360,7 +365,7 @@ coords(pROC.qual.red, "best", "threshold")
 En aquest ultim model utilitzarem les variables tant qualitatives com quantitatives que hem vist que tenien més efecte en els models. Veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
 ```{r}
 log.mixt<- glm(data = dhep, Class~SPIDERS+ASCITES+BILIRUBIN+ALBUMIN,
-                 family = binomial(link = "logit") )
+                 family = binomial(link = "logit"))
 summary(log.mixt)
 ```
 Podem veure com l'AUC ha augmentat lleugerament, tenint en compte els nivells obtinguts que ja eren molt bons hem aconseguit una millora utilitzant variables mixtes.
@@ -368,13 +373,38 @@ Podem veure com l'AUC ha augmentat lleugerament, tenint en compte els nivells ob
 prediction.mixt <- predict(log.mixt, data_test, type = "response")
 
 pROC.mixt <- roc(data_test$Class, prediction.mixt, plot = TRUE, print.auc = TRUE)
-coords(pROC.mixt, "best", "threshold")
 ```
 
+### Comparativa dels models
 
+En aquest apartat farem una comparativa dels models desde el punt de vista de sensibilitat, especificitat i exactitud. Com podem veure el millor model en termes de fiabilitat de la predicció és l'últim, el que utilitza variables mixtes. La pega del model és la sensibilitat, comparada amb les demés mesures és relativament baixa, 
+```{r}
+# Vector amb els models
+models <- vector(mode="list", length=2)
+models[[1]] <- pROC.quant
+models[[2]] <- pROC.qual
+models[[3]] <- pROC.qual.red
+models[[4]] <- pROC.mixt
 
+mat <- NULL
+for (model in models){
+  mat <- rbind(mat,
+               coords(model, x = "best", 
+                      ret = c("specificity","sensitivity","accuracy","precision"), transpose = F)
+               )
+}
 
+rownames(mat) <- c("Quantitatius", "Qualitatius", "Qualitatius reduït", "Mixt")
 
+kable(mat) %>% kable_styling()
+
+```
+
+```{r}
+prediction.class <- ifelse(prediction.qual > 0.2595301, "Die", "Live")
+prediction.class <- as.factor(prediction.class)
+confusionMatrix(prediction.class,data_test$Class,positive = "Die")
+```
 
 
 
