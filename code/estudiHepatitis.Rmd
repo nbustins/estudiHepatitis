@@ -3,11 +3,14 @@ title: 'Pràctica 2 - Tipologia i cicle de vida de les dades'
 author: "Autor: Narcís Bustins Núñez"
 date: "Desembre del 2019"
 output:
-  html_document: 
-    toc: yes
   pdf_document: 
     toc: yes
+    toc_depth: 4
+    number_sections: yes
+  html_document: 
+    toc: yes
 ---
+\newpage
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -15,8 +18,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Descripció del dataset
 
-El joc seleccionat s'ha obtingut al repositori de machine learning UCI, el seu títol és "Hepatitis Data Set". Aquest dataset és molt interessant per aquesta pràctica, ja que permetrà aplicar algorismes de machine learining tant supervisats com no supervisats. El dataset compta amb la classe a la qual pertany cada observació segons si ha mort o ha sobreviscut, aquesta etiqueta permetrà aplicar algorismes supervisats. El dataset compta amb variables tant qualitatives com quantitatives. Això serà interessant, ja que podrem aplicar tècniques de discretització a les variables quantitatives. És interessant tenir variables dels dos tipus per tant de provar diferents algorismes tant els que necessitin variables qualitatives com els q necessitin variables quantitatives.
+El joc seleccionat s'ha obtingut al repositori de machine learning UCI, el seu títol és "Hepatitis Data Set". Aquest dataset és molt interessant per aquesta pràctica, ja que permetrà aplicar algorismes de machine learining supervisats, disposa d'una etiqueta Class que indica a quina classe pertany cada observació. La classe indica si el pacient ha mort o ha sobreviscut. El dataset compta amb variables tant qualitatives com quantitatives i això aportarà varietat en el tractament de les dades. En l'àmbit mèdic és molt interessant, ja que permet fer models per tal de fer el seguiment de pacients d'hepatitis diagnosticar si és greu, si sobreviurà o morirà i descobrir quines variables són més importants és a dir, quines aporten més informació útil a l'hora de classificar el pacient.
+
 També hi ha motius d'interès personal per haver seleccionat aquest dataset, ja que em sembla especialment interessant com la ciència de dades pot ajudar al camp mèdic fent estudis per tal de diagnosticar o predir diverses malalties i així poder ajudar a molts humans. Aquest dataset es pot utilitzar amb diversos propòsits, per exemple crear algorismes tant de deep learining com de machine learining per ajudar a fer el seguiment dels pacients amb hepatitis, es pot predir si el pacient viurà o morirà, això pot ajudar a comprovar si el tractament que s'està seguint està funcionant o no. També es poden buscar les relacions que tenen els atributs, quines influeixen més pel diagnòstic.
+
+El dataset es pot obtenir en el següent link: https://archive.ics.uci.edu/ml/datasets/hepatitis
 
 Aquests són els atributs presents al dataset, els valors de les variables qualitatives estan representats numèricament però en aquesta descripció indicarem el significat d'aquests.\
 
@@ -45,8 +51,10 @@ Aquests són els atributs presents al dataset, els valors de les variables quali
 
 Llegim el fitxer.
 ```{r}
-dhep <- read.csv("data/hepatitis.csv")
-dattrs <- c("Class","AGE","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME","HISTOLOGY")
+dhep <- read.csv("../data/hepatitis.csv")
+dattrs <- c("Class","AGE","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG",
+            "LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","BILIRUBIN","ALK_PHOSPHATE",
+            "SGOT","ALBUMIN","PROTIME","HISTOLOGY")
 
 names(dhep) <- dattrs
 
@@ -82,7 +90,8 @@ for (i in factattrs){
 Definim dos vectors amb les variables categòriques i numèriques.
 ```{r}
 quantattrs <- c("AGE","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME")
-catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","HISTOLOGY")
+catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG",
+              "LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","HISTOLOGY")
 ```
 
 ## Valors desconeguts
@@ -108,12 +117,6 @@ for (m in missingattrs){
 
 El primer que farem serà imputar els valors perduts que tenim al dataset, com que aquest dataset no és excessivament gran preferim aproximar els valors en comptes d'eliminar les observacions que compten amb mising values és a dir, assumirem un petit grau d'error a canvi de mantenir més observacions. A l'hora d'aplicar algorismes supervisats és interessant tenir grans datasets ja que es poden dividir en el dataset de train i el de test.
 En el primer apartat d'anàlisi exploratori hem comprovat com hi ha diversos atributs que tenen valors perduts. Per tal d'imputar els valors perduts utilitzarem el mètode missForest ja que últimament està guanyant popularitat i s'utilitza amb variables mixtes. Encara que el kNN és un dels més populars aquest, és molt sensible a la k que es tria.
-
-Eliminem la columna que no volem utilitzar.
-```{r}
-#dhep$PROTIME <- NULL
-```
-
 
 Imputem els valors de les variables. Carreguem la llibreria i apliquem la funció.
 ```{r}
@@ -184,7 +187,7 @@ for (i in catattrs[- which (catattrs %in% list("Class","SEX"))] ){
 
 # Anàlisi de les dades
 
-# Seleccio dels grups a analitzar
+## Seleccio dels grups a analitzar
 
 En aquest apartat prepararem grups que poden ser d'interés per tal d'analitzar o comparar. En futurs apartats els utilitzarem per tal d'extreure conclusions.
 
@@ -202,19 +205,19 @@ dhep.live <- dhep[dhep$Class == "Live",]
 
 ### Comprovació de normalitat
 
-Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per tal de veure en quins casos podem assumir normalitat i en quins no. utilitzarem aquest test ja que es considera el més robust per tal de fer la prova de normalitat. Les hipòtesis que planteja el test són les seg¨üents:
+Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per tal de veure en quins casos podem assumir normalitat i en quins no. Utilitzarem aquest test, ja que es considera el més robust per tal de fer la prova de normalitat. Les hipòtesis que planteja el test són les següents:
 
-* **H_0**: La mostra & prové d'una població amb distribució normal.
+* **H_0**: La mostra prové d'una població amb distribució normal.
 * **H_1**: La mostra no prové d'una població amb distribució normal.
 
-Si rebutjem la hipòtesis nul·la no podrem dir que les mostres vinguin d'una població amb distribució normal, d'altra forma si acceptem la hipòtsis nul·la és a dir el p-valor és superior a 0.05 podrem assumir normalitat.
+Si rebutgem la hipòtesi nul·la no podrem dir que les mostres vinguin d'una població amb distribució normal, d'altra forma si acceptem la hipòtsi nul·la és a dir, el p-valor és superior a 0.05, podrem assumir normalitat.
 
 Carreguem una llibreria útil per fer taules.
 ```{r}
 library("kableExtra")
 ```
 
-Com podem veure l'única variable que segueix una distribució normal és l'edat "AGE". Prendrem una conclusió conservadora i no assumirem la normalitat de les demés variables (no aplicarem el teorema del límit central).
+Com podem veure l'única variable que segueix una distribució normal és l'edat "AGE". Prendrem una conclusió conservadora i no assumirem la normalitat de les altres variables (no aplicarem el teorema del límit central).
 ```{r}
 mat <- NULL
 alpha <- 0.05
@@ -230,13 +233,7 @@ colnames(mat) <- c("Variable","P-Value", "Dist. Normal")
 kable(mat) %>% kable_styling()
 ```
 
-### Comprovació de la l’homoscedasticitat
-En aquest apartat comprovarem si Utilitzarem el test de Levene per la variable AGE i la seva alternativa no paramètrica el test de Fligner-Killeen per a les demés variables ja que no hem assumit normalitat.
-
-### Influencia de les variables quantitatives en si el pacient soberviurà o morirà
-
-### Proves paramètriques
-En aquest apartat aplicarem el test de t Student
+### Testos sobre variables quantitatives
 
 ### Edat
 En aquest cas utilitzarem un test paramètric, hem pogut assumir normalitat després d'aplicar el test de shapiro wilk. Utilitzarem doncs el test de t-student.\
@@ -254,7 +251,7 @@ wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative 
 ```
 
 ### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
-En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són depenents o independents, quan rebutjem la hipòtesis nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
+En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són depenents o independents, quan rebutgem la hipòtesi nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
 
 ```{r}
 library("ggplot2")
@@ -285,7 +282,7 @@ library("pROC")
 library("caret")
 ```
 
-Recodifiquem l'ordre dels nivells ja que, entendrem Die com a el cas positiu i Live com el cas negatiu seguint amb la lògica de cas positiu quan es detecta una malaltia.
+Recodifiquem l'ordre dels nivells, ja que, entendrem Die com al cas positiu i Live com el cas negatiu seguint amb la lògica de cas positiu quan es detecta una malaltia.
 ```{r}
 dhep$Class <- relevel(dhep$Class,"Live")
 ```
@@ -297,7 +294,7 @@ dhep$Class <- relevel(dhep$Class,"Live")
 library("rminer") # Carreguem la llibreria que utilitzarem per dividir el dataset.
 ```
 
-Per tal de poder avaluar els models logístics haurem de dividir el dataset en dos, train i test. Per tal de dividir el conjunt utilitzarem un mètode simple anomenat mètode d'exlucsió (holdout), dividirem el conjunt total en 2/3 per al train i 1/3 per al test.
+Per tal de poder avaluar els models logístics haurem de dividir el dataset en dos, train i test. Per tal de dividir el conjunt utilitzarem un mètode simple anomenat mètode d'exclusió (holdout), dividirem el conjunt total en 2/3 per al train i 1/3 per al test.
 ```{r}
 h<-holdout(dhep$Class,ratio=2/3,mode="stratified")
 data_train<-dhep[h$tr,]
@@ -313,56 +310,52 @@ prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
 c(prop.ori,prop.train,prop.test)
 ```
 
-### Regressió logística utilitzant unicament variables quantitatives.
+### Regressió logística utilitzant únicament variables quantitatives.
 ```{r}
 log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBUMIN+ PROTIME, 
                  family = binomial(link = "logit") )
 summary(log.quant)
 ```
 
-Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.847.
+Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.849.
 ```{r}
 prediction.quant <- predict(log.quant, data_test, type = "response")
 
 pROC.quant <- roc(data_test$Class, prediction.quant, plot = TRUE, print.auc = TRUE)
-coords(pROC.quant, "best", "threshold")
 ```
 
 ### Regressió logística utilitzant unicament variables qualitatives.
-En aquest apartat utilitzarem les variables qualitatives que hem determinat, tenen efecte sobre si el pacient viurà o morirà utilitzant la prova de chi quadrat. Observem el p-valor que s'obté, awuest correspon al test de Wald i ens indica si el coeficient és significativament diferent de 0. En aquest cas eliminarem les variables amb un p-valor superior a 0.10.
+En aquest apartat utilitzarem les variables qualitatives que hem determinat, tenen efecte sobre si el pacient viurà o morirà utilitzant la prova de chi quadrat. Observem el p-valor que s'obté, aquest correspon al test de Wald i ens indica si el coeficient és significativament diferent de 0. En aquest cas eliminarem les variables amb un p-valor superior a 0.10.
 ```{r}
 log.qual <- glm(data = dhep, Class~ FATIGUE+MALAISE+SPLEEN_PAL+SPIDERS+ASCITES+VARICES+HISTOLOGY,
                  family = binomial(link = "logit") )
 summary(log.qual)
 ```
-
+Obtenim un AUC molt elevat 0.921.
 ```{r}
 prediction.qual <- predict(log.qual, data_test, type = "response")
 
 pROC.qual <- roc(data_test$Class, prediction.qual, plot = TRUE, print.auc = TRUE)
-coords(pROC.qual, "best", "threshold")
 ```
 
 #### Reducció del model
-
-Preparem el model reduit, hem eliminat les variables que tenien un p-valor superior a 0.10 al test de Wald i ens hem quedat amb SPIDERS i ASCITES.
+Preparem el model reduït, hem eliminat les variables que tenien un p-valor superior a 0.10 al test de Wald i ens hem quedat amb SPIDERS i ASCITES.
 ```{r}
 log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
                  family = binomial(link = "logit") )
 summary(log.qual.red)
 ```
 
-Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.768 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit ja que les demés variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit.
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.877 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit que segueix sent bo.
 ```{r}
 prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
 
 pROC.qual.red <- roc(data_test$Class, prediction.qual.red, plot = TRUE, print.auc = TRUE)
-coords(pROC.qual.red, "best", "threshold")
 ```
 
 ### Regressió logística utilitzant variables mixtes.
 
-En aquest ultim model utilitzarem les variables tant qualitatives com quantitatives que hem vist que tenien més efecte en els models. Veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
+En aquest últim model utilitzarem les variables tant qualitatives com quantitatives que hem vist que tenien més efecte en els models. Veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
 ```{r}
 log.mixt<- glm(data = dhep, Class~SPIDERS+ASCITES+BILIRUBIN+ALBUMIN,
                  family = binomial(link = "logit"))
@@ -376,10 +369,10 @@ pROC.mixt <- roc(data_test$Class, prediction.mixt, plot = TRUE, print.auc = TRUE
 ```
 
 ### Comparativa dels models
-
-En aquest apartat farem una comparativa dels models desde el punt de vista de sensibilitat, especificitat i exactitud. Com podem veure el millor model en termes de fiabilitat de la predicció és l'últim, el que utilitza variables mixtes. La pega del model és la sensibilitat, comparada amb les demés mesures és relativament baixa, 
+En aquest apartat farem una comparativa dels models des de el punt de vista de sensibilitat, especificitat i exactitud. 
 ```{r}
 # Vector amb els models
+models <- NULL
 models <- vector(mode="list", length=2)
 models[[1]] <- pROC.quant
 models[[2]] <- pROC.qual
@@ -390,7 +383,7 @@ mat <- NULL
 for (model in models){
   mat <- rbind(mat,
                coords(model, x = "best", 
-                      ret = c("specificity","sensitivity","accuracy","precision"), transpose = F)
+                      ret = c("specificity","sensitivity","accuracy","acuracy"), transpose = F)
                )
 }
 
@@ -400,11 +393,7 @@ kable(mat) %>% kable_styling()
 
 ```
 
-```{r}
-prediction.class <- ifelse(prediction.qual > 0.2595301, "Die", "Live")
-prediction.class <- as.factor(prediction.class)
-confusionMatrix(prediction.class,data_test$Class,positive = "Die")
-```
+
 
 
 
