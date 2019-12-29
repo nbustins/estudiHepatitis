@@ -1,8 +1,11 @@
 ---
-title: "estudiHepatitis"
+title: 'Pràctica 2 - Tipologia i cicle de vida de les dades'
+author: "Autor: Narcís Bustins Núñez"
+date: "Desembre del 2019"
+number_sections: yes
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -229,10 +232,10 @@ kable(mat) %>% kable_styling()
 ### Comprovació de la l’homoscedasticitat
 En aquest apartat comprovarem si Utilitzarem el test de Levene per la variable AGE i la seva alternativa no paramètrica el test de Fligner-Killeen per a les demés variables ja que no hem assumit normalitat.
 
-TODO
-
-
 ### Influencia de les variables quantitatives en si el pacient soberviurà o morirà
+
+### Proves paramètriques
+En aquest apartat aplicarem el test de t Student
 
 ### Edat
 En aquest cas utilitzarem un test paramètric, hem pogut assumir normalitat després d'aplicar el test de shapiro wilk. Utilitzarem doncs el test de t-student.\
@@ -250,17 +253,17 @@ wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative 
 ```
 
 ### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
-En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat.
+En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són depenents o independents, quan rebutjem la hipòtesis nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
 
 ```{r}
 library("ggplot2")
 ```
 
-Aplicarem el test a totes les variables categòriques.
+Aplicarem el test a totes les variables categòriques. Com podem veure a la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN_PAL, SPIDERS, ASCITES, VARICES, HISTOLOGY.
 ```{r}
 mat <- NULL
 alpha <- 0.05
-for (atr in catattrs){
+for (atr in catattrs[-which(catattrs %in% "Class")]){
   freq.table <- table(dhep$Class,dhep[,atr])
   
   pv <- chisq.test(freq.table)$p.value
@@ -276,6 +279,10 @@ kable(mat) %>% kable_styling()
 
 ## Model supervisat
 En aquest apartat aplicarem la regressió logística per tal de crear un model de classificació supervisat.
+```{r}
+library("pROC")
+library("caret")
+```
 
 ## Preparació del conjunt de train i test
 
@@ -298,6 +305,74 @@ prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
 
 c(prop.ori,prop.train,prop.test)
 ```
+
+
+### Regressió logística utilitzant unicament variables quantitatives.
+```{r}
+log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBUMIN+ PROTIME, 
+                 family = binomial(link = "logit") )
+summary(log.quant)
+```
+
+
+Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.825.
+```{r}
+prediction.quant <- predict(log.quant, data_test, type = "response")
+
+pROC.quant <- roc(data_test$Class, prediction.quant, plot = TRUE, print.auc = TRUE)
+coords(pROC.quant, "best", "threshold")
+```
+
+### Regressió logística utilitzant unicament variables qualitatives.
+En aquest apartat utilitzarem les variables qualitatives que hem determinat, tenen efecte sobre si el pacient viurà o morirà utilitzant la prova de chi quadrat. Observem el p-valor que s'obté, awuest correspon al test de Wald i ens indica si el coeficient és significativament diferent de 0. En aquest cas eliminarem les variables amb un p-valor superior a 0.10.
+```{r}
+log.qual <- glm(data = dhep, Class~ FATIGUE+MALAISE+SPLEEN_PAL+SPIDERS+ASCITES+VARICES+HISTOLOGY,
+                 family = binomial(link = "logit") )
+summary(log.qual)
+```
+
+```{r}
+prediction.qual <- predict(log.qual, data_test, type = "response")
+
+pROC.qual <- roc(data_test$Class, prediction.qual, plot = TRUE, print.auc = TRUE)
+coords(pROC.qual, "best", "threshold")
+```
+
+#### Reducció del model
+
+Preparem el model reduit, hem eliminat les variables que tenien un p-valor superior a 0.10 al test de Wald i ens hem quedat amb SPIDERS i ASCITES.
+```{r}
+log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
+                 family = binomial(link = "logit") )
+summary(log.qual.red)
+```
+
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.812 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit ja que les demés variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit sense comprometre en gran mesura la capacitat predictiva.
+```{r}
+prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
+
+pROC.qual.red <- roc(data_test$Class, prediction.qual.red, plot = TRUE, print.auc = TRUE)
+coords(pROC.qual.red, "best", "threshold")
+```
+
+### Regressió logística utilitzant variables mixtes.
+
+En aquest ultim model utilitzarem les variables tant qualitatives com quantitatives que hem vist que tenien més efecte en els models. Veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
+```{r}
+log.mixt<- glm(data = dhep, Class~SPIDERS+ASCITES+BILIRUBIN+ALBUMIN,
+                 family = binomial(link = "logit") )
+summary(log.mixt)
+```
+Podem veure com l'AUC ha augmentat lleugerament, tenint en compte els nivells obtinguts que ja eren molt bons hem aconseguit una millora utilitzant variables mixtes.
+```{r}
+prediction.mixt <- predict(log.mixt, data_test, type = "response")
+
+pROC.mixt <- roc(data_test$Class, prediction.mixt, plot = TRUE, print.auc = TRUE)
+coords(pROC.mixt, "best", "threshold")
+```
+
+
+
 
 
 
