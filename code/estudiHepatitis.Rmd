@@ -317,7 +317,7 @@ log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBU
 summary(log.quant)
 ```
 
-Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo amb un AUC de 0.849.
+Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo si ens guiem per l'AUC.
 ```{r}
 prediction.quant <- predict(log.quant, data_test, type = "response")
 
@@ -331,7 +331,7 @@ log.qual <- glm(data = dhep, Class~ FATIGUE+MALAISE+SPLEEN_PAL+SPIDERS+ASCITES+V
                  family = binomial(link = "logit") )
 summary(log.qual)
 ```
-Obtenim un AUC molt elevat 0.921.
+Sembla ser que també obtenim un bon model amb aquestes variables.
 ```{r}
 prediction.qual <- predict(log.qual, data_test, type = "response")
 
@@ -346,7 +346,7 @@ log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
 summary(log.qual.red)
 ```
 
-Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat amb un valor de 0.877 i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit que segueix sent bo.
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit que segueix sent bo.
 ```{r}
 prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
 
