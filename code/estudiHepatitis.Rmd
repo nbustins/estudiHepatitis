@@ -296,12 +296,12 @@ library("rminer") # Carreguem la llibreria que utilitzarem per dividir el datase
 
 Per tal de poder avaluar els models logístics haurem de dividir el dataset en dos, train i test. Per tal de dividir el conjunt utilitzarem un mètode simple anomenat mètode d'exclusió (holdout), dividirem el conjunt total en 2/3 per al train i 1/3 per al test.
 ```{r}
-h<-holdout(dhep$Class,ratio=2/3,mode="stratified")
+h<-holdout(dhep$Class,ratio=2/3,mode="random", seed = set.seed(6))
 data_train<-dhep[h$tr,]
 data_test<-dhep[h$ts,]
 ```
 
-Podem veure com la proporció de morts i vius es manté (la diferencia és molt petita).
+Podem veure com la proporció de morts i vius es manté (la difèrencia és molt petita).
 ```{r}
 prop.train <- sum(data_train$Class == "Live")/sum(data_train$Class == "Die")
 prop.ori <- sum(dhep$Class == "Live")/sum(dhep$Class == "Die")
@@ -309,6 +309,12 @@ prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
 
 c(prop.ori,prop.train,prop.test)
 ```
+
+```{r}
+ggplot(data = data_train, aes(x = Class)) + geom_bar()
+ggplot(data = data_test, aes(x = Class)) + geom_bar()
+```
+
 
 ### Regressió logística utilitzant únicament variables quantitatives.
 ```{r}
