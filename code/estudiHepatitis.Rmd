@@ -1,7 +1,9 @@
 ---
-title: 'Pràctica 2 - Tipologia i cicle de vida de les dades'
+title: "Pràctica 2 - Neteja i anàlisi de les dades"
+subtitle: "Tipologia i cicle de vida de les dades"
 author: "Autor: Narcís Bustins Núñez"
 date: "Desembre del 2019"
+toc-title: "Index"
 output:
   pdf_document: 
     toc: yes
@@ -13,7 +15,7 @@ output:
 \newpage
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 # Descripció del dataset
@@ -24,9 +26,9 @@ També hi ha motius d'interès personal per haver seleccionat aquest dataset, ja
 
 El dataset es pot obtenir en el següent link: https://archive.ics.uci.edu/ml/datasets/hepatitis
 
-Aquests són els atributs presents al dataset, els valors de les variables qualitatives estan representats numèricament però en aquesta descripció indicarem el significat d'aquests.\
+Aquests són els atributs presents al dataset, els valors de les variables qualitatives estan representats numèricament però en aquesta descripció indicarem el significat d'aquests.
 
-* **Class**: Classe a la qual pertany el pacient, viu o mor (Die/Life).
+* **Class**: Classe a la qual pertany el pacient, viu o mor (Die/Live).
 * **AGE**: Indica l'edat del pacient.
 * **SEX**: Indica el sexe del pacient(Male/Female).
 * **STEROID**: Indica si el pacient ha pres esteroides (yes/no).
@@ -37,24 +39,29 @@ Aquests són els atributs presents al dataset, els valors de les variables quali
 * **LIVER BIG**: Indica si la mida del fetge ha augmentat (yes/no).
 * **LIVER FIRM**: Indica si el fetge és manté ferm (yes/no).
 * **SPLEEN PAL**: Indica si el pacient presenta esplenomegàlia, una ampliació de la melsa (yes/no).
-* **SPIDERS**: Indica si el pacient presenta aranyes(vasos sanguinis engrandits) visibles.
-* **ASCITES**: Pesencia de líquid a la cavitat peritoneal (yes/no).
+* **SPIDERS**: Indica si el pacient presenta aranyes(vasos sanguinis engrandits) visibles (yes/no).
+* **ASCITES**: Indica si hi ha presencia de líquid a la cavitat peritoneal (yes/no).
 * **VARICES**: Indica si el pacient presenta varius (yes/no).
 * **BILIRUBIN**: Indica el nivell de bilirubina del pacient.
 * **ALK PHOSPH**: Indica el valor de la fosfatasa alcalina del pacient.
 * **SGOT**: Valor obtingut amb l'anàlisi de sang del pacient després de la prova AST.
 * **ALBUMIN**: Indica el valor de la proteïna albúmina del pacient.
-* **PROTIME**: Indica el valor de la característica del pacient.  
+* **PROTIME**: Indica el valor de la característica del pacient.
 * **HISTOLOGY**: Indica el valor de'estudiar la histología (estudis microscopics)(yes/no).
+
+# Objectius de l'estudi
+
+A partir del dataset definit es buscarà crear un models classificadors per tal d'identificar si un pacient està en risc de morir per hepatitis o no, es buscarà identificar les variables que influeixen més per obtenir aquest coneixement, és a dir les més significatives. Es plantejaran diferents hipòtesis a partir de les variables que es disposen per tal de buscar obtenir més coneixement i descobrir propietats d'interès.
+Aquest tipus d'anàlisi tenen molta importància en el sector mèdic, es poden crear algorismes de suport per tal d'ajudar als doctors a l'hora de fer el seguiment d'un pacient.
 
 # Neteja de les dades
 
 Llegim el fitxer.
 ```{r}
 dhep <- read.csv("../data/hepatitis.csv")
-dattrs <- c("Class","AGE","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG",
-            "LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","BILIRUBIN","ALK_PHOSPHATE",
-            "SGOT","ALBUMIN","PROTIME","HISTOLOGY")
+dattrs <- c("Class","AGE","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA",
+            "LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES",
+            "BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME","HISTOLOGY")
 
 names(dhep) <- dattrs
 
@@ -90,8 +97,8 @@ for (i in factattrs){
 Definim dos vectors amb les variables categòriques i numèriques.
 ```{r}
 quantattrs <- c("AGE","BILIRUBIN","ALK_PHOSPHATE","SGOT","ALBUMIN","PROTIME")
-catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA","LIVER_BIG",
-              "LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","HISTOLOGY")
+catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA",
+              "LIVER_BIG","LIVER_FIRM","SPLEEN_PAL","SPIDERS","ASCITES","VARICES","HISTOLOGY")
 ```
 
 ## Valors desconeguts
@@ -104,6 +111,10 @@ colSums(dhep == "?")
 Mirem si hi ha algun valor NA. Podem veure que no.
 ```{r}
 colSums(is.na(dhep))
+```
+Pel que fa als valors quantitatius, podem veure que cap valor és 0.
+```{r}
+colSums(dhep[,quantattrs] == 0)
 ```
 
 Canviarem el valor de l'interrogant per NA. Guardem en un vector tots els atributs que contenen valors desconeguts i seguidament apliquem el canvi.
@@ -131,7 +142,7 @@ colSums(is.na(dhep))
 mf.res$OOBerror
 ```
 
-## Valors extrems - outliers
+## Valors extrems
 
 Mostrem una primera descripció estadística.
 ```{r}
@@ -154,6 +165,10 @@ boxplot.stats(dhep$AGE)$out
 ```
 
 En aquest segon cas el nivell de bilirubina és més complex. Cal fer recerca sobre quins nivells màxims i mínims són possibles en pacient d'hepatitis. Segons les fonts consultades els valors més elevats de bilirubina indiquen problemes més greus, en propers apartats buscarem la relació de la bilirubina amb la vida o mort del pacient utilitzant testos d'estadística inferencial. Els nivells normals de bilirubina varien en un rang d'1 fins a 1.2 (mg/dL), a partir dels 2(mg/dL) la pell agafa un color groguenc. Sembla que aquests són valors molt elevats però dintre un rang possible, ja que s'indica que a partir dels 30 mg/dL el pacient es troba en estat molt crític.\
+
+**Fonts**:\
+- https://emedicine.medscape.com/article/775507-workup \
+- https://www.medicalnewstoday.com/articles/315086.php#1 \
 ```{r}
 boxplot(dhep$BILIRUBIN)
 boxplot.stats(dhep$BILIRUBIN)$out
@@ -207,8 +222,8 @@ dhep.live <- dhep[dhep$Class == "Live",]
 
 Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per tal de veure en quins casos podem assumir normalitat i en quins no. Utilitzarem aquest test, ja que es considera el més robust per tal de fer la prova de normalitat. Les hipòtesis que planteja el test són les següents:
 
-* **H_0**: La mostra prové d'una població amb distribució normal.
-* **H_1**: La mostra no prové d'una població amb distribució normal.
+* **H0**: La mostra prové d'una població amb distribució normal.
+* **H1**: La mostra no prové d'una població amb distribució normal.
 
 Si rebutgem la hipòtesi nul·la no podrem dir que les mostres vinguin d'una població amb distribució normal, d'altra forma si acceptem la hipòtsi nul·la és a dir, el p-valor és superior a 0.05, podrem assumir normalitat.
 
@@ -253,11 +268,11 @@ wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative 
 ### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
 En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són depenents o independents, quan rebutgem la hipòtesi nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
 
-```{r}
-library("ggplot2")
-```
+* **H0** : No hi ha relació entre les variables X i Y. 
+* **H1** : Hi ha relació entre les variables X i Y.
 
-Aplicarem el test a totes les variables categòriques. Com podem veure a la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN_PAL, SPIDERS, ASCITES, VARICES, HISTOLOGY.
+Aplicarem el test de chi quadrat a totes les variables categòriques. Com podem veure a la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN_PAL, SPIDERS, ASCITES, VARICES, HISTOLOGY tenen relació amb la classe a la que pertany el pacient. Hem utilitzat un alpha de 0.05 és a dir, en els casos on el p-valor obtingut és inferior a 0.05 rebutjem la Hipòtesi nul·la i determinem que hi ha relació.
+
 ```{r}
 mat <- NULL
 alpha <- 0.05
@@ -275,18 +290,18 @@ colnames(mat) <- c("Variable","P-Value", "Relació")
 kable(mat) %>% kable_styling()
 ```
 
-## Model supervisat
+## Models supervisats
 En aquest apartat aplicarem la regressió logística per tal de crear un model de classificació supervisat.
 ```{r}
 library("pROC")
 library("caret")
+library("ggplot2")
 ```
 
 Recodifiquem l'ordre dels nivells, ja que, entendrem Die com al cas positiu i Live com el cas negatiu seguint amb la lògica de cas positiu quan es detecta una malaltia.
 ```{r}
 dhep$Class <- relevel(dhep$Class,"Live")
 ```
-
 
 ## Preparació del conjunt de train i test
 
@@ -310,38 +325,47 @@ prop.test <- sum(data_test$Class == "Live")/sum(data_test$Class == "Die")
 c(prop.ori,prop.train,prop.test)
 ```
 
+Podem veure com es distribueixen les classes en els dos datasets de forma gràfica.
 ```{r}
-ggplot(data = data_train, aes(x = Class)) + geom_bar()
-ggplot(data = data_test, aes(x = Class)) + geom_bar()
+library("gridExtra")
+p1 <- ggplot(data = data_train, aes(x = Class)) + geom_bar() + ggtitle("Train dataset")
+p2 <- ggplot(data = data_test, aes(x = Class)) + geom_bar() + ggtitle("Test dataset")
+grid.arrange(p1,p2, nrow = 1)
 ```
 
-
 ### Regressió logística utilitzant únicament variables quantitatives.
+Preparem un model amb les variables quantitatives que hem determinat que tenen relació amb Class. En el resum del model creat podem veure el p-valor del test de Wald que ens indica si el coeficient de la variable és significatiu o no pel model. Això serà interessant a l'hora de buscar un model més reduït que segueixi sent un bon classificador.
 ```{r}
 log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBUMIN+ PROTIME, 
                  family = binomial(link = "logit") )
 summary(log.quant)
 ```
 
-Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo si ens guiem per l'AUC.
+Dibuixem la corva de ROC. Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo si ens guiem per l'AUC.
 ```{r}
 prediction.quant <- predict(log.quant, data_test, type = "response")
 
 pROC.quant <- roc(data_test$Class, prediction.quant, plot = TRUE, print.auc = TRUE)
+coords(pROC.quant, x = "best", 
+                      ret = c("specificity","sensitivity","accuracy"), 
+                      transpose = F)
 ```
 
-### Regressió logística utilitzant unicament variables qualitatives.
+### Regressió logística utilitzant únicament variables qualitatives
 En aquest apartat utilitzarem les variables qualitatives que hem determinat, tenen efecte sobre si el pacient viurà o morirà utilitzant la prova de chi quadrat. Observem el p-valor que s'obté, aquest correspon al test de Wald i ens indica si el coeficient és significativament diferent de 0. En aquest cas eliminarem les variables amb un p-valor superior a 0.10.
 ```{r}
 log.qual <- glm(data = dhep, Class~ FATIGUE+MALAISE+SPLEEN_PAL+SPIDERS+ASCITES+VARICES+HISTOLOGY,
                  family = binomial(link = "logit") )
 summary(log.qual)
 ```
-Sembla ser que també obtenim un bon model amb aquestes variables.
+Sembla ser que també obtenim un bon model amb aquestes variables, el valor de AUC segueix sent molt elevat encara que lleugerament inferior al model anterior.
 ```{r}
 prediction.qual <- predict(log.qual, data_test, type = "response")
 
 pROC.qual <- roc(data_test$Class, prediction.qual, plot = TRUE, print.auc = TRUE)
+coords(pROC.qual, x = "best", 
+                      ret = c("specificity","sensitivity","accuracy"), 
+                      transpose = F)
 ```
 
 #### Reducció del model
@@ -352,34 +376,42 @@ log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
 summary(log.qual.red)
 ```
 
-Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt elevat i hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa però amb aquesta versió reduïda hem aconseguit un model molt més petit que segueix sent bo.
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt semblant al model on utilitzem tots els atributs però, en aquest cas hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit minimament, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa. Amb aquesta versió reduïda hem aconseguit un model molt més petit que amb un AUC gairebé igual a l'anterior.
 ```{r}
 prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
 
 pROC.qual.red <- roc(data_test$Class, prediction.qual.red, plot = TRUE, print.auc = TRUE)
+coords(pROC.qual.red, x = "best", 
+                      ret = c("specificity","sensitivity","accuracy"), 
+                      transpose = F)
+               
 ```
 
-### Regressió logística utilitzant variables mixtes.
+### Regressió logística utilitzant variables mixtes
 
-En aquest últim model utilitzarem les variables tant qualitatives com quantitatives que hem vist que tenien més efecte en els models. Veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
+En aquest últim model utilitzarem les variables tant qualitatives com quantitatives que hem determinat com a més explicatives és a dir, les variables que han tingut més efecte en els models. 
+Ens fixem en els resultats obtinguts del resum del model, veiem que totes les variables aporten, segons el test de Wald els coeficients que obtenim són significativament diferents de 0.
 ```{r}
 log.mixt<- glm(data = dhep, Class~SPIDERS+ASCITES+BILIRUBIN+ALBUMIN,
                  family = binomial(link = "logit"))
 summary(log.mixt)
 ```
-Podem veure com l'AUC ha augmentat lleugerament, tenint en compte els nivells obtinguts que ja eren molt bons hem aconseguit una millora utilitzant variables mixtes.
+Podem veure com obtenim un molt bon resultat amb un AUC molt elevat. Hem aconseguit una bon model utilitzant variables mixtes.
 ```{r}
 prediction.mixt <- predict(log.mixt, data_test, type = "response")
 
 pROC.mixt <- roc(data_test$Class, prediction.mixt, plot = TRUE, print.auc = TRUE)
+coords(pROC.mixt, x = "best", 
+                      ret = c("specificity","sensitivity","accuracy"), 
+                      transpose = F)
 ```
 
-### Comparativa dels models
-En aquest apartat farem una comparativa dels models des de el punt de vista de sensibilitat, especificitat i exactitud. 
+### Comparació dels models
+Al llarg dels apartats anterior heme estat valorant els models unicament amb l'AUC però existeixen més mesures d'interés a l'hora de comparar models. En aquest apartat farem una comparativa dels models des de el punt de vista de sensibilitat, especificitat i exactitud. 
 ```{r}
 # Vector amb els models
 models <- NULL
-models <- vector(mode="list", length=2)
+models <- vector(mode="list", length=4)
 models[[1]] <- pROC.quant
 models[[2]] <- pROC.qual
 models[[3]] <- pROC.qual.red
@@ -387,19 +419,22 @@ models[[4]] <- pROC.mixt
 
 mat <- NULL
 for (model in models){
+  show(model)
   mat <- rbind(mat,
                coords(model, x = "best", 
-                      ret = c("specificity","sensitivity","accuracy","acuracy"), transpose = F)
+                      ret = c("sensitivity","specificity", "accuracy"),
+                      best.method = "closest.topleft"
+                      )
                )
 }
 
 rownames(mat) <- c("Quantitatius", "Qualitatius", "Qualitatius reduït", "Mixt")
-
-kable(mat) %>% kable_styling()
-
 ```
 
 
+```{r}
+kable(mat) %>% kable_styling()
+```
 
 
 
