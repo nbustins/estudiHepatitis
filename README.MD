@@ -11,3 +11,6 @@ Aquesta pràctica ha estat realitzada de forma individual per Narcís Bustins N�
 ## Contingut
 * **/src** : Directori amb el codi font i els resultats de l'execució (informe dinàmic).
 * **/data** : Directori que conté el dataset utilitzat.
+
+## Llicència
+El codi font d'aquest projecte està sota la llicència [GPLv3](https://www.gnu.org/licenses/gpl-3.0.ca.html).
