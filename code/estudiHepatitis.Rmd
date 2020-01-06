@@ -2,7 +2,7 @@
 title: "Pràctica 2 - Neteja i anàlisi de les dades"
 subtitle: "Tipologia i cicle de vida de les dades"
 author: "Autor: Narcís Bustins Núñez"
-date: "Desembre del 2019"
+date: "Gener del 2019"
 toc-title: "Index"
 output:
   pdf_document: 
@@ -202,7 +202,7 @@ for (i in catattrs[- which (catattrs %in% list("Class","SEX"))] ){
 
 # Anàlisi de les dades
 
-## Seleccio dels grups a analitzar
+## Selecció dels grups a analitzar
 
 En aquest apartat prepararem grups que poden ser d'interés per tal d'analitzar o comparar. En futurs apartats els utilitzarem per tal d'extreure conclusions.
 
@@ -431,7 +431,9 @@ for (model in models){
 rownames(mat) <- c("Quantitatius", "Qualitatius", "Qualitatius reduït", "Mixt")
 ```
 
-
+La sensibilitat fa referència als casos classificats com a positius on realment són positius, en aquest cas serien els pacients que moriran classificats correctament com a pacients que moriran. L'especificitat és la taxa de casos classificats com a negatius que realment són negatius, en aquest cas els pacients classificats com que no moriran que realment no moren. Finalment l'exactitud fa referència al conjunt de registres classificats correctament.
+De la taula podem extreure diverses conclusions, per exemple quan comparem el model amb totes les variables qualitatives la pèrdua en les tres mesures és mínima, per tant tenim un model amb menys variables però segueix sent gairebé igual de bo a l'hora de classificar per tant, és millor, ja que és un model més petit, únicament format per variables que afecten en la classificació.
+Podem veure com el model mixt especificitat i exactitud als dos models qualitatius però no al que compta amb totes les variables quantitatives. Sembla que alguna de les variables quantitatives o varies en conjunt són una mica significatives, encara que ens hem quedat amb les que tenen més efecte.
 ```{r}
 kable(mat) %>% kable_styling()
 ```

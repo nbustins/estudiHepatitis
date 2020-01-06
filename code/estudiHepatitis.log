@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.12.4)  3 JAN 2020 22:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.12.4)  6 JAN 2020 11:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1434,26 +1434,36 @@ Overfull \hbox (34.24352pt too wide) in paragraph at lines 1463--1463
 Package xcolor Warning: Incompatible color definition on input line 1465.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1471.
+Package xcolor Warning: Incompatible color definition on input line 1469.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1471.
+Package xcolor Warning: Incompatible color definition on input line 1469.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1491.
+
+Package xcolor Warning: Incompatible color definition on input line 1489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1493.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1493.
+
 [22]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1491.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1513.
+[23]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1513.
 (./estudiHepatitis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1491.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1491.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1513.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1513.
 
 Package rerunfilecheck Info: File `estudiHepatitis.out' has not changed.
-(rerunfilecheck)             Checksum: D9C57785FC75975056DDC0251CECCC13;4371.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1491.
+(rerunfilecheck)             Checksum: BE4525D160C69911BBB946909F2A21AE;4374.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1513.
  ) 
 Here is how much of TeX's memory you used:
- 13067 strings out of 494108
- 188160 string characters out of 6170506
- 269028 words of memory out of 5000000
+ 13068 strings out of 494108
+ 188173 string characters out of 6170506
+ 269029 words of memory out of 5000000
  16847 multiletter control sequences out of 15000+600000
  43953 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1469,10 +1479,10 @@ ry/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/narcisbn/Library
 /TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/narcisbn/Library/T
 inyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/narcisbn/Library/Tin
 yTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on estudiHepatitis.pdf (22 pages, 305182 bytes).
+Output written on estudiHepatitis.pdf (23 pages, 306440 bytes).
 PDF statistics:
- 327 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 64 named destinations out of 1000 (max. 500000)
+ 331 PDF objects out of 1000 (max. 8388607)
+ 280 compressed objects within 3 object streams
+ 65 named destinations out of 1000 (max. 500000)
  196 words of extra memory for PDF output out of 10000 (max. 10000000)
 
