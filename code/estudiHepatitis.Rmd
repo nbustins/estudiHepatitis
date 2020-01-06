@@ -11,12 +11,17 @@ output:
     number_sections: yes
   html_document: 
     toc: yes
+urlcolor: blue
 ---
 \newpage
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
+
+# Projecte
+
+El projecte amb el codi font i el dataset es troben en el següent repositori de GitHub: https://github.com/nbustins/estudiHepatitis
 
 # Descripció del dataset
 
@@ -51,7 +56,7 @@ Aquests són els atributs presents al dataset, els valors de les variables quali
 
 # Objectius de l'estudi
 
-A partir del dataset definit es buscarà crear un models classificadors per tal d'identificar si un pacient està en risc de morir per hepatitis o no, es buscarà identificar les variables que influeixen més per obtenir aquest coneixement, és a dir les més significatives. Es plantejaran diferents hipòtesis a partir de les variables que es disposen per tal de buscar obtenir més coneixement i descobrir propietats d'interès.
+A partir del dataset definit es buscarà crear models classificadors per tal d'identificar si un pacient està en risc de morir per hepatitis o no, es buscarà identificar les variables que influeixen més per obtenir aquest coneixement, és a dir les més significatives. Es plantejaran diferents hipòtesis a partir de les variables que es disposen per tal de buscar obtenir més coneixement i descobrir propietats d'interès.
 Aquest tipus d'anàlisi tenen molta importància en el sector mèdic, es poden crear algorismes de suport per tal d'ajudar als doctors a l'hora de fer el seguiment d'un pacient.
 
 # Neteja de les dades
@@ -103,7 +108,7 @@ catattrs <- c("Class","SEX","STEROID","ANTIVIRALS","FATIGUE","MALAISE","ANOREXIA
 
 ## Valors desconeguts
 
-En la primera insepecció hem pogut veure com hi ha valors desconeguts representats amb el signe interrogant. Mirarem quines columnes tenen valors desconeguts.
+En la primera inspecció hem pogut veure com hi ha valors desconeguts representats amb el signe interrogant. Mirarem quines columnes tenen valors desconeguts.
 ```{r}
 colSums(dhep == "?")
 ```
@@ -126,8 +131,8 @@ for (m in missingattrs){
 }
 ```
 
-El primer que farem serà imputar els valors perduts que tenim al dataset, com que aquest dataset no és excessivament gran preferim aproximar els valors en comptes d'eliminar les observacions que compten amb mising values és a dir, assumirem un petit grau d'error a canvi de mantenir més observacions. A l'hora d'aplicar algorismes supervisats és interessant tenir grans datasets ja que es poden dividir en el dataset de train i el de test.
-En el primer apartat d'anàlisi exploratori hem comprovat com hi ha diversos atributs que tenen valors perduts. Per tal d'imputar els valors perduts utilitzarem el mètode missForest ja que últimament està guanyant popularitat i s'utilitza amb variables mixtes. Encara que el kNN és un dels més populars aquest, és molt sensible a la k que es tria.
+El primer que farem serà imputar els valors perduts que tenim al dataset, com que aquest dataset no és excessivament gran preferim aproximar els valors en comptes d'eliminar les observacions que compten amb mising values és a dir, assumirem un petit grau d'error a canvi de mantenir més observacions. A l'hora d'aplicar algorismes supervisats és interessant tenir grans datasets, ja que es poden dividir en el dataset de train i el de test.
+En el primer apartat d'anàlisi exploratori hem comprovat com hi ha diversos atributs que tenen valors perduts. Per tal d'imputar els valors perduts utilitzarem el mètode missForest, ja que últimament està guanyant popularitat i s'utilitza amb variables mixtes. Encara que el kNN és un dels més populars aquest, és molt sensible a la k que es tria.
 
 Imputem els valors de les variables. Carreguem la llibreria i apliquem la funció.
 ```{r}
@@ -135,7 +140,7 @@ library("missForest")
 mf.res <- missForest(dhep, variablewise = TRUE)
 ```
 
-Podem veure com tots els valors NA han desaparegut, han estat imputats. També podem obtenir informació sobre l'error, es pot veure com les columnes que no tenien cap valor per imputar tenen un error de 0, les columnes on s'han imputat valors presenten els seus corresponents errors, això pot afectar a l'estudi ja que els valors no són reals simplement són suposicions.
+Podem veure com tots els valors NA han desaparegut, han estat imputats. També podem obtenir informació sobre l'error, es pot veure com les columnes que no tenien cap valor per imputar tenen un error de 0, les columnes on s'han imputat valors presenten els seus corresponents errors, això pot afectar a l'estudi, ja que els valors no són reals simplement són suposicions.
 ```{r}
 dhep <- mf.res$ximp
 colSums(is.na(dhep))
@@ -150,7 +155,7 @@ summary(dhep)
 ```
 
 Analitzem els valors extrems, comprovem quins atributs de tipus quantitatiu presenten possibles valors extrems.
-Com veiem els atributs AGE i BILIRUBIN tenen alguns valors extrems, en el proper apartat valorarem si realment són tan extrems i prendrem decissions sobre com tractar-ho.
+Com veiem els atributs AGE i BILIRUBIN tenen alguns valors extrems, en el proper apartat valorarem si realment són tan extrems i prendrem decisions sobre com tractar-ho.
 ```{r}
 for (col in quantattrs){
   cat("col:",col,"Outliers:",length(boxplot.stats(dhep[,col])$out),"\n")
@@ -204,14 +209,14 @@ for (i in catattrs[- which (catattrs %in% list("Class","SEX"))] ){
 
 ## Selecció dels grups a analitzar
 
-En aquest apartat prepararem grups que poden ser d'interés per tal d'analitzar o comparar. En futurs apartats els utilitzarem per tal d'extreure conclusions.
+En aquest apartat prepararem grups que poden ser d'interès per tal d'analitzar o comparar. En futurs apartats els utilitzarem per a extreure conclusions.
 
 Pacients que han mort d'hepatitis.
 ```{r}
 dhep.die <- dhep[dhep$Class == "Die",]
 ```
 
-Pacients que han soberviscut a l'hepatitis.
+Pacients que han sobreviscut a l'hepatitis.
 ```{r}
 dhep.live <- dhep[dhep$Class == "Live",]
 ```
@@ -225,7 +230,7 @@ Aplicarem un test de Shapiro-Wilk a tots els atributs quantitatius per tal de ve
 * **H0**: La mostra prové d'una població amb distribució normal.
 * **H1**: La mostra no prové d'una població amb distribució normal.
 
-Si rebutgem la hipòtesi nul·la no podrem dir que les mostres vinguin d'una població amb distribució normal, d'altra forma si acceptem la hipòtsi nul·la és a dir, el p-valor és superior a 0.05, podrem assumir normalitat.
+Si rebutgem la hipòtesi nul·la, no podrem dir que les mostres vinguin d'una població amb distribució normal. D'altra forma si acceptem la hipòtsi nul·la és a dir, el p-valor és superior a 0.05, podrem assumir normalitat.
 
 Carreguem una llibreria útil per fer taules.
 ```{r}
@@ -265,13 +270,13 @@ Podem dir que la mitjana de bilirubina dels pacients de classe DIE és superior 
 wilcox.test(dhep.die$BILIRUBIN,dhep.live$BILIRUBIN, paired = FALSE, alternative = 'greater')
 ```
 
-### Variables qualitatives que influeixen més en si el pacient soberviurà o morirà
-En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són depenents o independents, quan rebutgem la hipòtesi nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
+### Variables qualitatives que influeixen més en si el pacient sobreviurà o morirà
+En aquest apartat intentarem descobrir quines variables qualitatives influeixen més sobre si el pacient viurà o morirà. Utilitzarem el test de chi quadrat. Aquest test ens indica si dues variables són dependents o independents, quan rebutgem la hipòtesi nul·la direm que hi ha una relació entre les dues variables. Comprovarem si hi ha relació entre totes les variables categòriques i la classe, és a dir la variable que ens indica si el pacient viu o mor.
 
 * **H0** : No hi ha relació entre les variables X i Y. 
 * **H1** : Hi ha relació entre les variables X i Y.
 
-Aplicarem el test de chi quadrat a totes les variables categòriques. Com podem veure a la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN_PAL, SPIDERS, ASCITES, VARICES, HISTOLOGY tenen relació amb la classe a la que pertany el pacient. Hem utilitzat un alpha de 0.05 és a dir, en els casos on el p-valor obtingut és inferior a 0.05 rebutjem la Hipòtesi nul·la i determinem que hi ha relació.
+Aplicarem el test de chi quadrat a totes les variables categòriques. Com podem veure a la taula les variables FATIGUE, MALAISE, ANOREXIA, SPLEEN_PAL, SPIDERS, ASCITES, VARICES, HISTOLOGY tenen relació amb la classe a la qual pertany el pacient. Hem utilitzat un alpha de 0.05 és a dir, en els casos on el p-valor obtingut és inferior a 0.05 rebutgem la Hipòtesi nul·la i determinem que hi ha relació.
 
 ```{r}
 mat <- NULL
@@ -316,7 +321,7 @@ data_train<-dhep[h$tr,]
 data_test<-dhep[h$ts,]
 ```
 
-Podem veure com la proporció de morts i vius es manté (la difèrencia és molt petita).
+Podem veure com la proporció de morts i vius es manté (la diferència és molt petita).
 ```{r}
 prop.train <- sum(data_train$Class == "Live")/sum(data_train$Class == "Die")
 prop.ori <- sum(dhep$Class == "Live")/sum(dhep$Class == "Die")
@@ -341,7 +346,7 @@ log.quant <- glm(data = dhep, Class~ AGE + BILIRUBIN+ ALK_PHOSPHATE + SGOT+ ALBU
 summary(log.quant)
 ```
 
-Dibuixem la corva de ROC. Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo si ens guiem per l'AUC.
+Dibuixem la corba de ROC. Podem veure com utilitzant simplement els atributs quantitatius obtenim un model bastant bo si ens guiem per l'AUC.
 ```{r}
 prediction.quant <- predict(log.quant, data_test, type = "response")
 
@@ -358,7 +363,7 @@ log.qual <- glm(data = dhep, Class~ FATIGUE+MALAISE+SPLEEN_PAL+SPIDERS+ASCITES+V
                  family = binomial(link = "logit") )
 summary(log.qual)
 ```
-Sembla ser que també obtenim un bon model amb aquestes variables, el valor de AUC segueix sent molt elevat encara que lleugerament inferior al model anterior.
+Sembla que també obtenim un bon model amb aquestes variables, el valor de AUC segueix sent molt elevat encara que lleugerament inferior al model anterior.
 ```{r}
 prediction.qual <- predict(log.qual, data_test, type = "response")
 
@@ -376,7 +381,7 @@ log.qual.red <- glm(data = dhep, Class~SPIDERS+ASCITES,
 summary(log.qual.red)
 ```
 
-Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt semblant al model on utilitzem tots els atributs però, en aquest cas hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuit minimament, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa. Amb aquesta versió reduïda hem aconseguit un model molt més petit que amb un AUC gairebé igual a l'anterior.
+Obtenim uns molt bons resultats, l'AUC s'ha mantingut molt semblant al model on utilitzem tots els atributs però, en aquest cas hem reduït el model utilitzant només dues variables. Naturalment l'AUC ha disminuït mínimament, ja que les altres variables aportaven una mica d'informació encara que no fos extremadament significativa. Amb aquesta versió reduïda hem aconseguit un model molt més petit que amb un AUC gairebé igual a l'anterior.
 ```{r}
 prediction.qual.red <- predict(log.qual.red, data_test, type = "response")
 
@@ -407,7 +412,7 @@ coords(pROC.mixt, x = "best",
 ```
 
 ### Comparació dels models
-Al llarg dels apartats anterior heme estat valorant els models unicament amb l'AUC però existeixen més mesures d'interés a l'hora de comparar models. En aquest apartat farem una comparativa dels models des de el punt de vista de sensibilitat, especificitat i exactitud. 
+Al llarg dels apartats anteriors hem estat valorant els models únicament amb l'AUC però existeixen més mesures d'interès a l'hora de comparar models. En aquest apartat farem una comparativa dels models des del punt de vista de sensibilitat, especificitat i exactitud.
 ```{r}
 # Vector amb els models
 models <- NULL

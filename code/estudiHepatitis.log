@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.12.4)  6 JAN 2020 11:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.12.4)  6 JAN 2020 13:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -441,13 +441,14 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip46
 )
-Package hyperref Info: Option `unicode' set `true' on input line 30.
+Package hyperref Info: Option `unicode' set `true' on input line 34.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2019/11/10 v7.00c Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 30.
+Package hyperref Info: Option `colorlinks' set `true' on input line 34.
+Package hyperref Info: Option `breaklinks' set `true' on input line 34.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
@@ -456,6 +457,8 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 Package color Info: Driver file: pdftex.def on input line 147.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+) (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 )) (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2019/11/09
 Style option: `fancyvrb' v3.4 <2019/11/09> (tvz)
@@ -648,31 +651,31 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ) (./estudiHepatitis.aux)
 \openout1 = `estudiHepatitis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 147.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 151.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-47.
+51.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 14
-7.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 15
+1.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -711,7 +714,7 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box48
-Package hyperref Info: Link coloring OFF on input line 147.
+Package hyperref Info: Link coloring ON on input line 151.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/refcount.sty
@@ -723,9 +726,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count137
 )
-LaTeX Info: Redefining \ref on input line 147.
-LaTeX Info: Redefining \pageref on input line 147.
-LaTeX Info: Redefining \nameref on input line 147.
+LaTeX Info: Redefining \ref on input line 151.
+LaTeX Info: Redefining \pageref on input line 151.
+LaTeX Info: Redefining \nameref on input line 151.
 (./estudiHepatitis.out) (./estudiHepatitis.out)
 \@outlinefile=\write4
 \openout4 = `estudiHepatitis.out'.
@@ -742,37 +745,37 @@ cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 )) (./estudiHepatitis.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5
 .
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5
 .
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-4.
+5.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-4.
+5.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 4.
+(Font)              <10> on input line 5.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 4.
+(Font)              <7> on input line 5.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 4.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
+(Font)              <5> on input line 5.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
@@ -782,689 +785,688 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {/Users/narcisbn/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-93.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
+04.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [2]
 
-Package xcolor Warning: Incompatible color definition on input line 259.
+Package xcolor Warning: Incompatible color definition on input line 270.
 
-[2]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-60.
+71.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 261.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 272.
 
-Package xcolor Warning: Incompatible color definition on input line 268.
-
-
-Package xcolor Warning: Incompatible color definition on input line 268.
+Package xcolor Warning: Incompatible color definition on input line 279.
 
 
-Package xcolor Warning: Incompatible color definition on input line 273.
+Package xcolor Warning: Incompatible color definition on input line 279.
 
 
-Package xcolor Warning: Incompatible color definition on input line 277.
+Package xcolor Warning: Incompatible color definition on input line 284.
 
 
-Package xcolor Warning: Incompatible color definition on input line 277.
+Package xcolor Warning: Incompatible color definition on input line 288.
 
 
-Package xcolor Warning: Incompatible color definition on input line 287.
+Package xcolor Warning: Incompatible color definition on input line 288.
 
 
-Package xcolor Warning: Incompatible color definition on input line 291.
+Package xcolor Warning: Incompatible color definition on input line 298.
 
 
-Package xcolor Warning: Incompatible color definition on input line 291.
+Package xcolor Warning: Incompatible color definition on input line 302.
+
+
+Package xcolor Warning: Incompatible color definition on input line 302.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-315.
+326.
 (/Users/narcisbn/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 315--315
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 326--326
 []\T1/lmtt/m/n/10 ##  $ SGOT         : Factor w/ 85 levels "?","100","101",..: 
 54 48 62 31 44 1 1 60 8 46 ...[] 
  []
 
 
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 315--315
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 326--326
 []\T1/lmtt/m/n/10 ##  $ ALBUMIN      : Factor w/ 30 levels "?","2.1","2.2",..: 
 13 18 18 18 18 1 1 22 17 22 ...[] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 320.
-
-
-Package xcolor Warning: Incompatible color definition on input line 327.
-
-
-Package xcolor Warning: Incompatible color definition on input line 327.
-
-
-Package xcolor Warning: Incompatible color definition on input line 332.
+Package xcolor Warning: Incompatible color definition on input line 331.
 
 [3]
 
-Package xcolor Warning: Incompatible color definition on input line 339.
+Package xcolor Warning: Incompatible color definition on input line 338.
 
 
-Package xcolor Warning: Incompatible color definition on input line 339.
+Package xcolor Warning: Incompatible color definition on input line 338.
 
 
 Package xcolor Warning: Incompatible color definition on input line 343.
 
 
-Package xcolor Warning: Incompatible color definition on input line 349.
+Package xcolor Warning: Incompatible color definition on input line 350.
 
 
-Package xcolor Warning: Incompatible color definition on input line 349.
+Package xcolor Warning: Incompatible color definition on input line 350.
 
 
-Package xcolor Warning: Incompatible color definition on input line 358.
+Package xcolor Warning: Incompatible color definition on input line 354.
 
 
-Package xcolor Warning: Incompatible color definition on input line 362.
+Package xcolor Warning: Incompatible color definition on input line 360.
 
 
-Package xcolor Warning: Incompatible color definition on input line 362.
+Package xcolor Warning: Incompatible color definition on input line 360.
 
 
-Package xcolor Warning: Incompatible color definition on input line 377.
+Package xcolor Warning: Incompatible color definition on input line 369.
 
 
-Package xcolor Warning: Incompatible color definition on input line 381.
+Package xcolor Warning: Incompatible color definition on input line 373.
 
 
-Package xcolor Warning: Incompatible color definition on input line 381.
+Package xcolor Warning: Incompatible color definition on input line 373.
 
 
-Package xcolor Warning: Incompatible color definition on input line 396.
+Package xcolor Warning: Incompatible color definition on input line 388.
 
 
-Package xcolor Warning: Incompatible color definition on input line 400.
+Package xcolor Warning: Incompatible color definition on input line 392.
 
 
-Package xcolor Warning: Incompatible color definition on input line 400.
+Package xcolor Warning: Incompatible color definition on input line 392.
 
 
-Package xcolor Warning: Incompatible color definition on input line 413.
+Package xcolor Warning: Incompatible color definition on input line 407.
 
 [4]
 
-Package xcolor Warning: Incompatible color definition on input line 421.
+Package xcolor Warning: Incompatible color definition on input line 411.
 
 
-Package xcolor Warning: Incompatible color definition on input line 421.
+Package xcolor Warning: Incompatible color definition on input line 411.
 
 
-Package xcolor Warning: Incompatible color definition on input line 439.
+Package xcolor Warning: Incompatible color definition on input line 424.
 
 
-Package xcolor Warning: Incompatible color definition on input line 443.
+Package xcolor Warning: Incompatible color definition on input line 432.
 
 
-Package xcolor Warning: Incompatible color definition on input line 443.
+Package xcolor Warning: Incompatible color definition on input line 432.
 
 
-Package xcolor Warning: Incompatible color definition on input line 469.
+Package xcolor Warning: Incompatible color definition on input line 450.
 
 
-Package xcolor Warning: Incompatible color definition on input line 473.
+Package xcolor Warning: Incompatible color definition on input line 454.
 
 
-Package xcolor Warning: Incompatible color definition on input line 473.
+Package xcolor Warning: Incompatible color definition on input line 454.
 
 
-Package xcolor Warning: Incompatible color definition on input line 488.
+Package xcolor Warning: Incompatible color definition on input line 480.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 484.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 484.
 
 
-Package xcolor Warning: Incompatible color definition on input line 506.
+Package xcolor Warning: Incompatible color definition on input line 500.
 
 [5]
 
-Package xcolor Warning: Incompatible color definition on input line 510.
+Package xcolor Warning: Incompatible color definition on input line 505.
 
 
-Package xcolor Warning: Incompatible color definition on input line 510.
+Package xcolor Warning: Incompatible color definition on input line 505.
 
 
-Package xcolor Warning: Incompatible color definition on input line 526.
+Package xcolor Warning: Incompatible color definition on input line 518.
 
 
-Package xcolor Warning: Incompatible color definition on input line 530.
+Package xcolor Warning: Incompatible color definition on input line 522.
 
 
-Package xcolor Warning: Incompatible color definition on input line 530.
+Package xcolor Warning: Incompatible color definition on input line 522.
 
 
-Package xcolor Warning: Incompatible color definition on input line 569.
+Package xcolor Warning: Incompatible color definition on input line 538.
 
 
-Package xcolor Warning: Incompatible color definition on input line 575.
+Package xcolor Warning: Incompatible color definition on input line 542.
 
 
-Package xcolor Warning: Incompatible color definition on input line 575.
+Package xcolor Warning: Incompatible color definition on input line 542.
 
 [6]
 
-Package xcolor Warning: Incompatible color definition on input line 592.
+Package xcolor Warning: Incompatible color definition on input line 581.
 
 
-Package xcolor Warning: Incompatible color definition on input line 596.
+Package xcolor Warning: Incompatible color definition on input line 587.
 
 
-Package xcolor Warning: Incompatible color definition on input line 596.
+Package xcolor Warning: Incompatible color definition on input line 587.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf, id=146, 469.755pt x
+
+Package xcolor Warning: Incompatible color definition on input line 604.
+
+
+Package xcolor Warning: Incompatible color definition on input line 608.
+
+
+Package xcolor Warning: Incompatible color definition on input line 608.
+
+<estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf, id=154, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.
-pdf  used on input line 598.
+pdf  used on input line 610.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 600.
-
-
-Package xcolor Warning: Incompatible color definition on input line 604.
-
-
-Package xcolor Warning: Incompatible color definition on input line 604.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 610--620
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 621--624
-
- []
+Package xcolor Warning: Incompatible color definition on input line 612.
 
 [7 <./estudiHepatitis_files/figure-latex/unnamed-chunk-15-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 625.
+Package xcolor Warning: Incompatible color definition on input line 616.
 
 
-Package xcolor Warning: Incompatible color definition on input line 629.
+Package xcolor Warning: Incompatible color definition on input line 616.
 
 
-Package xcolor Warning: Incompatible color definition on input line 629.
+Underfull \hbox (badness 10000) in paragraph at lines 622--632
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf, id=159, 469.755pt x
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 633--636
+
+ []
+
+
+Package xcolor Warning: Incompatible color definition on input line 637.
+
+
+Package xcolor Warning: Incompatible color definition on input line 641.
+
+
+Package xcolor Warning: Incompatible color definition on input line 641.
+
+<estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf, id=168, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.
-pdf  used on input line 631.
+pdf  used on input line 643.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 633.
+Package xcolor Warning: Incompatible color definition on input line 645.
 
 
-Package xcolor Warning: Incompatible color definition on input line 637.
+Package xcolor Warning: Incompatible color definition on input line 649.
 
 
-Package xcolor Warning: Incompatible color definition on input line 637.
+Package xcolor Warning: Incompatible color definition on input line 649.
 
 
-Package xcolor Warning: Incompatible color definition on input line 643.
+Package xcolor Warning: Incompatible color definition on input line 655.
 
+[8 <./estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 647.
-
-
-Package xcolor Warning: Incompatible color definition on input line 647.
+Package xcolor Warning: Incompatible color definition on input line 659.
 
 
 Package xcolor Warning: Incompatible color definition on input line 659.
 
 
-Package xcolor Warning: Incompatible color definition on input line 670.
+Package xcolor Warning: Incompatible color definition on input line 671.
 
 
-Package xcolor Warning: Incompatible color definition on input line 670.
+Package xcolor Warning: Incompatible color definition on input line 682.
 
 
-Package xcolor Warning: Incompatible color definition on input line 670.
-
-[8 <./estudiHepatitis_files/figure-latex/unnamed-chunk-16-1.pdf>]
-
-Package xcolor Warning: Incompatible color definition on input line 670.
-
-
-Package xcolor Warning: Incompatible color definition on input line 670.
-
-
-Package xcolor Warning: Incompatible color definition on input line 672.
+Package xcolor Warning: Incompatible color definition on input line 682.
 
 
 Package xcolor Warning: Incompatible color definition on input line 684.
 
 
-Package xcolor Warning: Incompatible color definition on input line 684.
+Package xcolor Warning: Incompatible color definition on input line 696.
 
 
-Package xcolor Warning: Incompatible color definition on input line 699.
-
-
-Package xcolor Warning: Incompatible color definition on input line 703.
-
-
-Package xcolor Warning: Incompatible color definition on input line 703.
-
-
-Package xcolor Warning: Incompatible color definition on input line 707.
+Package xcolor Warning: Incompatible color definition on input line 696.
 
 
 Package xcolor Warning: Incompatible color definition on input line 711.
 
 
-Package xcolor Warning: Incompatible color definition on input line 711.
+Package xcolor Warning: Incompatible color definition on input line 715.
 
 
-Package xcolor Warning: Incompatible color definition on input line 741.
+Package xcolor Warning: Incompatible color definition on input line 715.
 
 
-Package xcolor Warning: Incompatible color definition on input line 745.
+Package xcolor Warning: Incompatible color definition on input line 719.
 
 
-Package xcolor Warning: Incompatible color definition on input line 745.
+Package xcolor Warning: Incompatible color definition on input line 723.
 
 
-Package xcolor Warning: Incompatible color definition on input line 752.
+Package xcolor Warning: Incompatible color definition on input line 723.
 
 [9]
 
-Package xcolor Warning: Incompatible color definition on input line 767.
+Package xcolor Warning: Incompatible color definition on input line 753.
 
 
-Package xcolor Warning: Incompatible color definition on input line 767.
+Package xcolor Warning: Incompatible color definition on input line 757.
 
 
-Package xcolor Warning: Incompatible color definition on input line 804.
+Package xcolor Warning: Incompatible color definition on input line 757.
 
 
-Package xcolor Warning: Incompatible color definition on input line 808.
+Package xcolor Warning: Incompatible color definition on input line 764.
 
 
-Package xcolor Warning: Incompatible color definition on input line 808.
+Package xcolor Warning: Incompatible color definition on input line 779.
+
+
+Package xcolor Warning: Incompatible color definition on input line 779.
+
+
+Package xcolor Warning: Incompatible color definition on input line 816.
+
+
+Package xcolor Warning: Incompatible color definition on input line 820.
+
+
+Package xcolor Warning: Incompatible color definition on input line 820.
 
 [10]
 
-Package xcolor Warning: Incompatible color definition on input line 838.
+Package xcolor Warning: Incompatible color definition on input line 850.
 
 
-Package xcolor Warning: Incompatible color definition on input line 842.
+Package xcolor Warning: Incompatible color definition on input line 854.
 
 
-Package xcolor Warning: Incompatible color definition on input line 842.
+Package xcolor Warning: Incompatible color definition on input line 854.
 
 
-Package xcolor Warning: Incompatible color definition on input line 881.
+Package xcolor Warning: Incompatible color definition on input line 893.
 
 
-Package xcolor Warning: Incompatible color definition on input line 898.
+Package xcolor Warning: Incompatible color definition on input line 910.
 
 
-Package xcolor Warning: Incompatible color definition on input line 898.
+Package xcolor Warning: Incompatible color definition on input line 910.
+
+
+Package xcolor Warning: Incompatible color definition on input line 910.
 
 [11]
 
-Package xcolor Warning: Incompatible color definition on input line 941.
+Package xcolor Warning: Incompatible color definition on input line 910.
 
 
-Package xcolor Warning: Incompatible color definition on input line 945.
+Package xcolor Warning: Incompatible color definition on input line 910.
 
 
-Package xcolor Warning: Incompatible color definition on input line 945.
+Package xcolor Warning: Incompatible color definition on input line 953.
 
 
-Package xcolor Warning: Incompatible color definition on input line 962.
+Package xcolor Warning: Incompatible color definition on input line 957.
 
 
-Package xcolor Warning: Incompatible color definition on input line 966.
+Package xcolor Warning: Incompatible color definition on input line 957.
 
 
-Package xcolor Warning: Incompatible color definition on input line 966.
+Package xcolor Warning: Incompatible color definition on input line 974.
 
 
-Package xcolor Warning: Incompatible color definition on input line 987.
+Package xcolor Warning: Incompatible color definition on input line 978.
 
 
-Package xcolor Warning: Incompatible color definition on input line 991.
+Package xcolor Warning: Incompatible color definition on input line 978.
 
 
-Package xcolor Warning: Incompatible color definition on input line 991.
-
-
-Package xcolor Warning: Incompatible color definition on input line 997.
+Package xcolor Warning: Incompatible color definition on input line 999.
 
 [12]
 
-Package xcolor Warning: Incompatible color definition on input line 1001.
+Package xcolor Warning: Incompatible color definition on input line 1003.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1001.
+Package xcolor Warning: Incompatible color definition on input line 1003.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1007.
+Package xcolor Warning: Incompatible color definition on input line 1009.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1011.
+Package xcolor Warning: Incompatible color definition on input line 1013.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1011.
+Package xcolor Warning: Incompatible color definition on input line 1013.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1018.
+Package xcolor Warning: Incompatible color definition on input line 1019.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1024.
+Package xcolor Warning: Incompatible color definition on input line 1023.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1024.
+Package xcolor Warning: Incompatible color definition on input line 1023.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1029.
+Package xcolor Warning: Incompatible color definition on input line 1030.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1037.
+Package xcolor Warning: Incompatible color definition on input line 1036.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1037.
+Package xcolor Warning: Incompatible color definition on input line 1036.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1046.
+Package xcolor Warning: Incompatible color definition on input line 1041.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1050.
+Package xcolor Warning: Incompatible color definition on input line 1049.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1050.
+Package xcolor Warning: Incompatible color definition on input line 1049.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1063.
+Package xcolor Warning: Incompatible color definition on input line 1058.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1069.
+Package xcolor Warning: Incompatible color definition on input line 1062.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1069.
+Package xcolor Warning: Incompatible color definition on input line 1062.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.pdf, id=197, 469.755pt x
+
+Package xcolor Warning: Incompatible color definition on input line 1075.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1081.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1081.
+
+<estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.pdf, id=205, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.
-pdf  used on input line 1071.
+pdf  used on input line 1083.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [13]
 
-Package xcolor Warning: Incompatible color definition on input line 1083.
+Package xcolor Warning: Incompatible color definition on input line 1095.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1089.
+Package xcolor Warning: Incompatible color definition on input line 1101.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1089.
+Package xcolor Warning: Incompatible color definition on input line 1101.
 
 [14 <./estudiHepatitis_files/figure-latex/unnamed-chunk-31-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1126.
+Package xcolor Warning: Incompatible color definition on input line 1138.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1132.
+Package xcolor Warning: Incompatible color definition on input line 1144.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1132.
+Package xcolor Warning: Incompatible color definition on input line 1144.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.pdf, id=214, 469.755pt x
+<estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.pdf, id=222, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.
-pdf  used on input line 1142.
+pdf  used on input line 1154.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 1144.
+Package xcolor Warning: Incompatible color definition on input line 1156.
 
 [15 <./estudiHepatitis_files/figure-latex/unnamed-chunk-33-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1150.
+Package xcolor Warning: Incompatible color definition on input line 1162.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1150.
+Package xcolor Warning: Incompatible color definition on input line 1162.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1168.
+Package xcolor Warning: Incompatible color definition on input line 1180.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1174.
+Package xcolor Warning: Incompatible color definition on input line 1186.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1174.
+Package xcolor Warning: Incompatible color definition on input line 1186.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1213.
+Package xcolor Warning: Incompatible color definition on input line 1225.
 
 [16]
 
-Package xcolor Warning: Incompatible color definition on input line 1219.
+Package xcolor Warning: Incompatible color definition on input line 1231.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1219.
+Package xcolor Warning: Incompatible color definition on input line 1231.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.pdf, id=229, 469.755pt x
+<estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.pdf, id=237, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.
-pdf  used on input line 1229.
+pdf  used on input line 1241.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 1231.
+Package xcolor Warning: Incompatible color definition on input line 1243.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1237.
+Package xcolor Warning: Incompatible color definition on input line 1249.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1237.
+Package xcolor Warning: Incompatible color definition on input line 1249.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1251.
+Package xcolor Warning: Incompatible color definition on input line 1263.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1257.
+Package xcolor Warning: Incompatible color definition on input line 1269.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1257.
+Package xcolor Warning: Incompatible color definition on input line 1269.
 
 [17 <./estudiHepatitis_files/figure-latex/unnamed-chunk-35-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1294.
+Package xcolor Warning: Incompatible color definition on input line 1306.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1300.
+Package xcolor Warning: Incompatible color definition on input line 1312.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1300.
+Package xcolor Warning: Incompatible color definition on input line 1312.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.pdf, id=240, 469.755pt x
+<estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.pdf, id=248, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.
-pdf  used on input line 1310.
+pdf  used on input line 1322.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 1312.
+Package xcolor Warning: Incompatible color definition on input line 1324.
 
 [18]
 
-Package xcolor Warning: Incompatible color definition on input line 1318.
+Package xcolor Warning: Incompatible color definition on input line 1330.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1318.
+Package xcolor Warning: Incompatible color definition on input line 1330.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1336.
+Package xcolor Warning: Incompatible color definition on input line 1348.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1342.
+Package xcolor Warning: Incompatible color definition on input line 1354.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1342.
+Package xcolor Warning: Incompatible color definition on input line 1354.
 
 [19 <./estudiHepatitis_files/figure-latex/unnamed-chunk-37-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1376.
+Package xcolor Warning: Incompatible color definition on input line 1388.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1382.
+Package xcolor Warning: Incompatible color definition on input line 1394.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1382.
+Package xcolor Warning: Incompatible color definition on input line 1394.
 
-<estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.pdf, id=256, 469.755pt x
+<estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.pdf, id=264, 469.755pt x
  325.215pt>
 File: estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (t
 ype pdf)
 <use estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.pdf>
 Package pdftex.def Info: estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.
-pdf  used on input line 1392.
+pdf  used on input line 1404.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Package xcolor Warning: Incompatible color definition on input line 1394.
+Package xcolor Warning: Incompatible color definition on input line 1406.
 
 [20]
 
-Package xcolor Warning: Incompatible color definition on input line 1400.
+Package xcolor Warning: Incompatible color definition on input line 1412.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1400.
+Package xcolor Warning: Incompatible color definition on input line 1412.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1415.
+Package xcolor Warning: Incompatible color definition on input line 1427.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1448.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1448.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1448.
 
 [21 <./estudiHepatitis_files/figure-latex/unnamed-chunk-39-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1448.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1436.
+Package xcolor Warning: Incompatible color definition on input line 1448.
 
 
-Overfull \hbox (91.99335pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (91.99335pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## roc.default(response = data_test$Class, predictor = predic
 tion.quant,     plot = TRUE, print.auc = TRUE)[] 
  []
 
 
-Overfull \hbox (39.4935pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (39.4935pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## Data: prediction.quant in 40 controls (data_test$Class Liv
 e) < 12 cases (data_test$Class Die).[] 
  []
 
 
-Overfull \hbox (86.74336pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (86.74336pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## roc.default(response = data_test$Class, predictor = predic
 tion.qual,     plot = TRUE, print.auc = TRUE)[] 
  []
 
 
-Overfull \hbox (34.24352pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (34.24352pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## Data: prediction.qual in 40 controls (data_test$Class Live
 ) < 12 cases (data_test$Class Die).[] 
  []
 
 
-Overfull \hbox (107.7433pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (107.7433pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## roc.default(response = data_test$Class, predictor = predic
 tion.qual.red,     plot = TRUE, print.auc = TRUE)[] 
  []
 
 
-Overfull \hbox (55.24345pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (55.24345pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## Data: prediction.qual.red in 40 controls (data_test$Class 
 Live) < 12 cases (data_test$Class Die).[] 
  []
 
 
-Overfull \hbox (86.74336pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (86.74336pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## roc.default(response = data_test$Class, predictor = predic
 tion.mixt,     plot = TRUE, print.auc = TRUE)[] 
  []
 
 
-Overfull \hbox (34.24352pt too wide) in paragraph at lines 1463--1463
+Overfull \hbox (34.24352pt too wide) in paragraph at lines 1475--1475
 []\T1/lmtt/m/n/10 ## Data: prediction.mixt in 40 controls (data_test$Class Live
 ) < 12 cases (data_test$Class Die).[] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 1465.
+Package xcolor Warning: Incompatible color definition on input line 1477.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1469.
+Package xcolor Warning: Incompatible color definition on input line 1481.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1469.
+Package xcolor Warning: Incompatible color definition on input line 1481.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1489.
+Package xcolor Warning: Incompatible color definition on input line 1501.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1493.
+Package xcolor Warning: Incompatible color definition on input line 1505.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1493.
+Package xcolor Warning: Incompatible color definition on input line 1505.
 
 [22]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1513.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1525.
 [23]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1513.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1525.
 (./estudiHepatitis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1513.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1513.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1525.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1525.
 
 Package rerunfilecheck Info: File `estudiHepatitis.out' has not changed.
-(rerunfilecheck)             Checksum: BE4525D160C69911BBB946909F2A21AE;4374.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1513.
+(rerunfilecheck)             Checksum: 4F1E147A39218346BF25BD84CE5FC2AC;4458.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1525.
  ) 
 Here is how much of TeX's memory you used:
- 13068 strings out of 494108
- 188173 string characters out of 6170506
- 269029 words of memory out of 5000000
- 16847 multiletter control sequences out of 15000+600000
+ 13213 strings out of 494108
+ 190251 string characters out of 6170506
+ 273524 words of memory out of 5000000
+ 16987 multiletter control sequences out of 15000+600000
  43953 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  39i,9n,37p,560b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1479,10 +1481,10 @@ ry/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/narcisbn/Library
 /TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/narcisbn/Library/T
 inyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/narcisbn/Library/Tin
 yTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on estudiHepatitis.pdf (23 pages, 306440 bytes).
+Output written on estudiHepatitis.pdf (23 pages, 306331 bytes).
 PDF statistics:
- 331 PDF objects out of 1000 (max. 8388607)
- 280 compressed objects within 3 object streams
- 65 named destinations out of 1000 (max. 500000)
- 196 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 340 PDF objects out of 1000 (max. 8388607)
+ 289 compressed objects within 3 object streams
+ 67 named destinations out of 1000 (max. 500000)
+ 204 words of extra memory for PDF output out of 10000 (max. 10000000)
 
